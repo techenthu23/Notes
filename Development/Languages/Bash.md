@@ -1,5 +1,5 @@
 
-# What does “sh a.sh <&0 >&0” mean?
+# What does “`sh a.sh <&0 >&0`” mean?
 
 `n>&p` and `n<&p` are the same operator and are for duplicating the file descriptor (fd) `p` onto the file descriptor `n`. Or said otherwise, they redirect the file descriptor `n` to whatever resource fd `p` is redirected to.
 
