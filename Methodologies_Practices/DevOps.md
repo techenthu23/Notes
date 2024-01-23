@@ -43,6 +43,7 @@ Before DevOps, software applications were developed with either the waterfall mo
 
 - The **waterfall or sequential model** was a pioneering approach in the Software Development Life Cycle (SDLC). With this model, software development becomes a linear process where different phases and tasks are positioned successively.
 - **AGILE software development**, on the other hand, involved the use of various approaches and the collaboration of multiple teams in SDLC.
+
 The linearity of the waterfall model and the cross-functionality of AGILE software development were still unable to ensure quick and continuous delivery of flawless software applications.
 
 DevOps Services came into play by effectively serving the purpose of reducing the time involved in SDLC for prompt deliveries and securing the continuous production of high-quality, foolproof software applications.
