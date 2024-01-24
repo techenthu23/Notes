@@ -149,6 +149,8 @@ From a line manager's perspective, aspects to consider when providing commendati
 10. **Positive Team Dynamics:** Mention positive contributions to team morale and a constructive team environment.
 
 Tailor the commendations based on specific achievements or strengths demonstrated by the team member, providing specific examples to reinforce your feedback.
+
+
 ---
 
 Here's an example of commendations for a DevSecOps Engineer from a line manager's perspective:
@@ -227,7 +229,7 @@ These commendations provide specific examples of achievements and contributions 
 
 When providing feedback that encompasses both functional and line manager perspectives, you can phrase it as follows:
 
-"I'd like to share comprehensive feedback from both a functional and line manager standpoint. From a functional perspective, [highlight specific observations or areas]. On the managerial side, [address specific aspects or commendations]. This dual perspective aims to capture a holistic view of performance."
+"I'd like to share comprehensive feedback from and line manager standpoint. From a functional perspective, [highlight specific observations or areas]. On the managerial side, [address specific aspects or commendations]. This dual perspective aims to capture a holistic view of performance."
 ---
 
 Effective Key Performance Indicators (KPIs) for a DLP security engineer should cover different aspects of their role, including prevention, detection, response, and overall program effectiveness. Here are some key areas to consider:
@@ -396,3 +398,54 @@ When providing performance development comments for an average performer, it's i
 "While [employee's name] consistently meets the expectations of their role, there is an opportunity for growth in a few areas. Encouraging [him/her] to take on additional responsibilities or seek out professional development opportunities could elevate [his/her] performance. Providing more proactive contributions in team discussions and leveraging [his/her] strengths could lead to an even more impactful contribution to our projects. I look forward to seeing [employee's name] continue to develop and take on new challenges."
 
 This feedback is intended to guide the employee toward improvement without being overly critical, emphasizing potential areas for growth and providing support for further development.
+
+---
+
+When providing feedback to a team member about being more outspoken in Scrum and team meetings, it's essential to be constructive and encouraging. Here are some tips:
+
+1. **Start with Positive Feedback:** Begin by acknowledging their contributions and strengths. Highlight specific instances where their input was valuable to the team.
+
+2. **Express the Importance of Communication:** Emphasize the significance of open communication in Scrum and team meetings. Explain how it fosters collaboration, improves understanding, and contributes to the team's success.
+
+3. **Be Specific about Expectations:** Clearly outline your expectations regarding their participation in meetings. Specify the type of information or insights you'd like them to share and encourage them to voice their opinions.
+
+4. **Highlight Opportunities for Contribution:** Point out situations where their expertise or perspective could make a positive impact on the team's decisions or problem-solving processes. This helps them see the value they bring to discussions.
+
+5. **Encourage Questions and Input:** Explicitly invite them to ask questions, seek clarification, or share their thoughts during meetings. Assure them that their input is valued and contributes to the team's overall success.
+
+6. **Offer Support and Resources:** If there are any barriers preventing them from being more outspoken, inquire about those challenges and offer support. This could include additional training, resources, or mentorship.
+
+7. **Provide Constructive Examples:** Share specific examples of instances where being more vocal would have been beneficial. Frame this in a way that focuses on improvement rather than criticism.
+
+8. **Use Positive Language:** Frame your feedback in a positive and encouraging manner. Use language that conveys support and highlights their potential to contribute more actively.
+
+9. **Set Small Goals:** Encourage them to take small steps towards being more outspoken. Setting achievable goals can build confidence and gradually increase their comfort level in contributing during meetings.
+
+10. **Follow Up and Recognize Progress:** Schedule follow-up conversations to discuss their progress. Acknowledge and celebrate any improvements they've made in being more outspoken.
+
+Remember, the goal is to inspire positive change and create a culture of open communication within the team.
+
+
+When providing feedback to a reportee who is not outspoken in team calls, it's important to communicate in a supportive and constructive manner. Here are some tips:
+
+1. **Start with Positives:** Begin by acknowledging their strengths and positive contributions. This helps create a balanced perspective and makes the feedback more well-received.
+
+2. **Express Understanding:** Recognize that everyone has different communication styles and comfort levels. Express that you understand this, but also highlight the importance of active participation in team calls.
+
+3. **Use "I" Statements:** Frame your feedback using "I" statements to avoid sounding accusatory. For example, say, "I've noticed that your input during team calls has been limited, and I believe your insights could be valuable for the team."
+
+4. **Be Specific and Concrete:** Provide specific examples of situations where their input would have been beneficial. This makes the feedback more actionable and helps them understand the context.
+
+5. **Ask for Their Perspective:** Encourage them to share their thoughts on why they might not be as outspoken during team calls. This opens up a dialogue and allows you to understand any concerns or barriers they might be facing.
+
+6. **Highlight the Team's Need for Input:** Emphasize the collaborative nature of team calls and how each team member's input contributes to the overall success of the team. Help them see the bigger picture.
+
+7. **Set Small Goals:** Instead of expecting immediate change, work together to set small, achievable goals for increased participation. This could include making one comment or asking one question per meeting.
+
+8. **Offer Support:** Ask if there's anything you or the team can do to support them in feeling more comfortable contributing during calls. This could involve additional training, resources, or even role-playing scenarios.
+
+9. **Encourage Them to Prepare:** Suggest that they prepare for team calls by reviewing the agenda or jotting down a few points they'd like to discuss. This preparation can boost confidence and make speaking up feel more natural.
+
+10. **Provide Positive Reinforcement:** Recognize and celebrate any improvements. Positive reinforcement can motivate them to continue making an effort to be more outspoken.
+
+Remember, the goal is to create an environment where the reportee feels supported and encouraged to contribute actively during team calls. Open communication and a collaborative approach are key.
