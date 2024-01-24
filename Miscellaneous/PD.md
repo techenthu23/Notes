@@ -230,6 +230,7 @@ These commendations provide specific examples of achievements and contributions 
 When providing feedback that encompasses both functional and line manager perspectives, you can phrase it as follows:
 
 "I'd like to share comprehensive feedback from and line manager standpoint. From a functional perspective, [highlight specific observations or areas]. On the managerial side, [address specific aspects or commendations]. This dual perspective aims to capture a holistic view of performance."
+
 ---
 
 Effective Key Performance Indicators (KPIs) for a DLP security engineer should cover different aspects of their role, including prevention, detection, response, and overall program effectiveness. Here are some key areas to consider:
