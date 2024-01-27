@@ -393,7 +393,7 @@ fs.writeFileSync('example.yml', yaml.safeDump(data));
 
 ```
 
-## C #
+## C#
 
 Make sure you have the YamlDotNet library in your project. You can add it using NuGet:
 
