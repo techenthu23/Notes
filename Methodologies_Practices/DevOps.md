@@ -18,14 +18,11 @@ title:  "DevOps"
   - [6. Continuous Deployment](#6-continuous-deployment)
   - [7. Continuous Operations](#7-continuous-operations)
 - [Devops Evolution](#devops-evolution)
-- [CI/CD Tools](#cicd-tools)
-  - [Agro CD](#agro-cd)
-  - [CircleCI](#circleci)
-  - [GitHub Actions](#github-actions)
-  - [GoCD](#gocd)
-  - [Gradle](#gradle)
-  - [Helm](#helm)
-  - [Jenkins X](#jenkins-x)
+- [Comprehensive list of tools category in DevOps](#comprehensive-list-of-tools-category-in-devops)
+- [DataOps](#dataops)
+  - [Why DevOps for Data and Testing?](#why-devops-for-data-and-testing)
+  - [The Continuous Testing Process](#the-continuous-testing-process)
+  - [QuerySurge DevOps for Data Use Cases](#querysurge-devops-for-data-use-cases)
 
 # DevOps
 
@@ -115,6 +112,8 @@ Jenkins is a popular tool used in this phase. Whenever there is a change in the 
 
 ## 3. Continuous Testing
 
+Continuous testing is the execution of automated tests that are triggered by another process and provide immediate feedback on risks.
+
 This phase, where the developed software is continuously testing for bugs. For constant testing, automation testing tools such as **TestNG, JUnit, Selenium**, etc are used. These tools allow QAs to test multiple code-bases thoroughly in parallel to ensure that there is no flaw in the functionality. In this phase, Docker Containers can be used for simulating the test environment.
 
 **Selenium** does the automation testing, and **TestNG** generates the reports. This entire testing phase can automate with the help of a Continuous Integration tool called Jenkins.
@@ -151,7 +150,6 @@ All DevOps operations are based on the continuity with complete automation of th
 
 It is clear from the discussion that continuity is the critical factor in the DevOps in removing steps that often distract the development, take it longer to detect issues and produce a better version of the product after several months. With DevOps, we can make any software product more efficient and increase the overall count of interested customers in your product.
 
-
 # Devops Evolution
 
 Although DevOps has been around for just over a decade, it has continued to evolve. New DevOps technologies and changing infrastructure have caused teams to adapt and technology advancements that will continue to drive change. Below are a few of the ways you can expect DevOps to evolve in 2021 and beyond.
@@ -173,50 +171,84 @@ When developing applications in an automated CI/CD pipeline, security cannot be 
 
 Transitioning to a DevSecOps paradigm requires a culture change, but also a new technology stack. Shifting security left requires tight integration of application security tooling into the development life cycle, and implementation of cloud security solutions that can help gain visibility, and apply automated security controls, to complex cloud environments.
 
+# Comprehensive list of tools category in DevOps
 
-# CI/CD Tools 
-As technologies change, so does tooling. While you can continue to use the same tools you started with, you should at least consider if other tools can increase your efficiency. 
+1. Continuous Integration (CI) tools : Jenkins, CircleCI, Travis CI, GitLab CI/CD, Bamboo, Codeship.
+2. Continuous Delivery (CD) tools : Spinnaker, Harness, ArgoCD, GitOps, DeployHub, Flux.
+3. Configuration Management tools : Ansible, Chef, Puppet, SaltStack, Terraform, CloudFormation.
+4. Infrastructure as Code (IaC) tools : AWS CloudFormation, Terraform, Azure Resource Manager, Google Cloud Deployment Manager, Puppet Bolt.
+5. Containerization tools : Docker, Kubernetes, Mesosphere, OpenShift, Nomad, Amazon ECS.
+6. Monitoring and Logging tools : Nagios, Prometheus, Grafana, ELK stack, Splunk, Datadog,
+7. Network Monitoring Tools : Catchpoint
+8. Application Monitoring Tools : SignalFx AppDynamics Raygun New Relic
+9. Infrastructure Monitoring tools : Zabbix, Nagios, Sensu, Icinga, Cacti, Munin.
+10. Collaboration and Project Management tools : Jira, Trello, Asana, Basecamp, Confluence, GitLab.
+11. Version Control tools : Git, GitHub, GitLab, Bitbucket, SVN, Perforce.
+12. Code Review tools : Crucible, Gerrit, CodeCollaborator, Review Board, Phabricator, GitLab.
+13. Release Management tools : ReleaseHub, GoCD, XebiaLabs, Octopus Deploy, ElectricFlow, Plutora.
+14. Cloud Management tools : CloudFormation, CloudTrail, CloudWatch, CloudBerry, Cloudyn, ParkMyCloud.
+15. Security tools : Aqua Security, Twistlock, Sysdig Secure, Anchore, SonarQube, Fortify.
+16. Testing and QA tools : Selenium, Appium, Cucumber, JUnit, TestNG, Postman.
+17. Data Validation Tools : QuerySurge
+18. Build tools : Gradle, Maven, Ant, Make, MSBuild, sbt.
+19. Artifact Repository Management tools : Nexus, JFrog Artifactory, Docker Hub, Amazon ECR, GitLab.
+20. Performance Testing tools : JMeter, LoadRunner, Gatling, Apache Bench, BlazeMeter, Flood.
+21. Dependency Management tools : Maven, Gradle, SBT, Leiningen, Bundler, Composer.
+22. Database Management tools : Liquibase, Flyway, Redgate SQL, Toad for SQL Server, dbForge Studio.
+23. API Management tools : Apigee, Amazon API Gateway, Kong, Tyk, WSO2, 3scale.
+24. Code Profiling tools : JProfiler, YourKit Java Profiler, VisualVM, Gprof, Valgrind, Perf.
+25. Deployment Automation tools : AWS CodeDeploy, Jenkins, Octopus Deploy, Chef, Puppet, Ansible.
+26. ChatOps tools : Slack, HipChat, Mattermost, Microsoft Teams, Stride, Rocket.Chat.
+27. Code Coverage tools : Cobertura, JaCoCo, Clover, Emma, SimpleCov, Coveralls.
+28. Incident Management tools : PagerDuty, VictorOps, OpsGenie, AlertOps, xMatters, Squadcast.
+29. Cloud Orchestration tools : Cloudify, Apache Brooklyn, Scalr, CloudBolt, RightScale, IBM Cloud Orchestrator.
+30. Code Quality tools : SonarQube, CodeClimate, ESLint, PMD, FindBugs, Checkstyle.
+31. Package Management tools : apt-get, yum, NuGet, Chocolatey, Homebrew, RPM.
+32. Compliance and Governance tools : Chef Compliance, Puppet Enterprise, Red Hat Satellite, Twistlock, Sysdig Secure.
+33. Automation Frameworks : Robot Framework, Selenium, Cucumber, Behave, TestCafe, TestComplete.
 
-## Agro CD
-[Argo CD](https://argoproj.github.io/argo-cd/) is a CI/CD tool for Kubernetes development. It is an open source project which is currently in the incubation status at the Cloud Native Computing Foundation (CNCF). It uses Git repositories to store the state of Kubernetes applications, monitors applications and can resync clusters to the desired state, as represented in the git configuration.
+# DataOps
 
-This innovative approach also allows you to store multiple desired states of a Kubernetes application, using branches, tags, or by pinning manifest versions using a Git commit. This provides a flexible environment for managing Kubernetes configurations during the development process.
+A DevOps-type of automated process for data, known as DevOps for Data or DataOps applies DevOps tools and techniques to data.
 
-## CircleCI
-[CircleCI](https://circleci.com/) is an open source CI/CD tool. It includes features for job orchestration, resource configuration, caching, debugging, security and dashboard reports. CircleCI integrates with a variety of tools, including GitHub, Heroku, Slack and Docker.
+## Why DevOps for Data and Testing?
 
-CircleCI is available in three tiers, one of which is free. You can use it in the cloud or on-premises with Linux, Mac or Windows machines.
+Development teams need to validate data in an ETL process when the process is completed. Operations teams needs to validate the new data every day. And both teams need to collaborate on this. How can you solve this?
 
-## GitHub Actions
-[GitHub Actions](https://github.com/features/actions) are a recently released open source tooling feature you can use to automate workflows. It enables you to build, test and deploy code directly from GitHub. You can base your automation on any GitHub events, including push or issue creation.
+## The Continuous Testing Process
 
-GitHub actions include features for matrix workflows, hosted runners for all major operating systems, built-in secrets storage and live log reviews. It supports all common programming languages.
+The Development team builds and runs unit tests as ETL code is developed, for immediate testing as code is committed, catching issues in the ETL code quickly and reducing remediation costs.
 
-GitHub actions includes hosted runtime environments that are free to use for the first 2000 minutes of use per month. If you need more time for testing, you can purchase time by the minute or in bulk. You can use GitHub actions by including them in your YAML files.
+The QA team designs and executes tests during the development cycle to provide the development team with quick feedback on each ETL build deployed, helping to pinpoint where defects appear in the code.
 
-## GoCD
-[GoCD](https://www.gocd.org/) is an open source build tool that lets you build CI/CD development pipelines. At its core, it is a continuous integration (CI) server, which lets you work with complex release workflows. It goes beyond classic CI to let you construct a full continuous delivery (CD) pipeline, all the way from automated and secure deployment to production.
+The Operations team executes tests automatically — after ETL execution — on a regular daily cycle.
 
-GoCD defines pipelines using code checked into source control – this infrastructure-as-code (IaC) approach lets you test, manage and reuse pipelines across multiple projects. Pipelines can be represented by JSON or YAML templates.
+Tests in DataOps have a role in both the Value and Innovation Pipelines. In the Value Pipeline, tests monitor the data values flowing through the data factory to catch anomalies or flag data values outside statistical norms. In the Innovation Pipeline, tests validate new analytics before deploying them”
 
-Another feature of GoCD is the ability to run pipelines both sequentially and in parallel, with configurable dependencies. You can view entire workflows from development to production and track a feature from initial commit to production deployment, using value stream mapping.
+QuerySurge, the smart data testing solution that automates validation & testing of critical data, is the first-of-its-kind full DevOps solution for continuous data testing.
 
-GoCD is extremely flexible, providing an ecosystem of plugins and the tool also allows you to develop and contribute your own.
+With our new QuerySurge DevOps for Data release:
 
-## Gradle
-[Gradle](https://gradle.org/) is an open source build automation tool that has been around for about a decade. It continues to be well-adopted and supported. Although it is not a new tool, it can be a good alternative if you’re looking to replace Maven as your build management solution. Gradle is more extensible and faster than Maven, and can be used for native development of C/C++ applications.
+- Testers can choose between a Command Line API or a RESTful API
+- Teams have access to 100+ API calls with hundreds of different properties
+- Our Swagger documentation allows Testers to try QuerySurge’s RESTful API services to see the results before using them live in their code
+- Testers can dynamically generate, execute, and update tests and data stores utilizing API calls
+- QuerySurge integrates with virtually all DevOps solutions in the marketplace
 
-Gradle includes features for incremental builds, build caching and parallel execution. It supports a variety of languages and platforms, including Java, Scala, Android and C/C++. You can integrate Gradle with a range of tools, including Eclipse, IntelliJ and Jenkins.
+QuerySurge DevOps for Data dramatically increases the automation in your current data testing practice and provides validation of your DataOps pipeline.
 
-You can use Gradle on-premises or with a virtual machine in the cloud. Gradle is free to use; however, if you want enterprise support or training, you need to pay an additional fee.
+API Features Include the ability to create and modify:
 
-## Helm
-[Helm](https://helm.sh/) is an open source Kubernetes package manager. You can use it to define, install and upgrade Kubernetes-orchestrated applications. Helm includes a wide range of pre-built charts (sets of distributable Kubernetes resources) that you can use to deploy services faster and more easily. You can use Helm on Linux, Mac and Windows devices.
+- source and target test queries
+- connections to data stores
+- tests associated with an execution suite
+- new staging tables from various data connections
+- custom flow controls based on run results
 
-## Jenkins X
-[Jenkins X](https://jenkins-x.io/) is an updated version of the well-known Jenkins. It builds on the existing features of Jenkins with capabilities tailored to Kubernetes and Docker workflows. It includes features for pre-built pipelines, integrated GitOps support, automatically generated preview environments and feedback integration.
+## QuerySurge DevOps for Data Use Cases
 
-Jenkins X integrates with Tekton, Prow, Helm, Knative and Skaffold. You can use it on Linux, Mac or Windows machines.
+Use Case Example #1
 
+QuerySurge tests are automatically initiated after ETL execution completes and conditional logic is applied based on specific results of those executions.
 
-level of consistency and stability in the user experience
+![](./pictures/dataops-use-case-example-1.jpg)
