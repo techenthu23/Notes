@@ -1,7 +1,7 @@
 
 # YAML
 
-YAML is a human-readable data serialization language that is often used for writing configuration files. Depending on whom you ask, YAML stands for yet another markup language or YAML ain’t markup language (a recursive acronym), which emphasizes that YAML is for data, not documents. 
+YAML is a human-readable data serialization language that is often used for writing configuration files. Depending on whom you ask, YAML stands for yet another markup language or YAML ain’t markup language (a recursive acronym), which emphasizes that YAML is for data, not documents.
 
 YAML is a popular programming language because it is designed to be easy to read and understand. It can also be used in conjunction with other programming languages.
 
@@ -22,7 +22,6 @@ YAML does not natively support variable placeholders.
 Anchors and Aliases almost provide the desired functionality, but these do not work as variable placeholders that can be inserted into arbitrary regions throughout the YAML text. They must be placed as separate YAML nodes.
 
 There are some add-on libraries that support arbitrary variable placeholders, but they are not part of the native YAML specification.
-
 
 ```yaml
 ---  # Indicate start of a document
@@ -265,6 +264,8 @@ set2:
 ...  # document end
 ```
 
+> - XML, JSON and YAML are the most popular data serialization languages. This means we use them to represent data structures and values, which enables data storage, transfer and distribution, often for use in configurations.
+> - XML is a markup language, whereas JSON and YAML are data formats. XML uses tags to define the elements and stores data in a tree structure, whereas data in JSON is stored like a map with key/value pairs. YAML, on the other hand, allows representation of data both in list or sequence format and in the form of a map with key/value pairs.
 
 # Parsing YAML
 
@@ -273,91 +274,158 @@ set2:
 ```python
 import yaml
 
-with open('details.yaml') as f:
-    data = yaml.load(f, Loader=yaml.FullLoader)
-    print(data)
+# Parse YAML file
+with open('example.yml', 'r') as file:
+    data = yaml.safe_load(file)
 
-# Writing YAML to Files in Python
-with open(r'E:\data.yaml', 'w') as file: #create a new yaml file 
-    data = yaml.dump(dict_file, file)
-```
+# Upload data (example: printing it)
+print(data)
 
+# Modify data (example: add a new key-value pair)
+data['new_key'] = 'new_value'
 
-## Node.js
+# Upload data back to YAML file
+with open('example.yml', 'w') as file:
+    yaml.dump(data, file)
 
-```js
-const yaml = require('js-yaml'); //initialize js-yaml
-const fs   = require('fs'); //initialize filestream
-
-try {
-  const result = yaml.load(fs.readFileSync('example.yml', 'utf8'));
-  console.log(result);
-} catch (e) {
-  console.log(e); //catch exception
-}
 ```
 
 ## Ruby
 
 ```ruby
 require 'yaml'
-thing = YAML.load_file('some.yml')
-puts thing.inspect
 
-# Parse a YAML string
-YAML.load("--- foo") #=> "foo"
+# Parse YAML file
+data = YAML.load_file('example.yml')
 
-# Emit some YAML
-YAML.dump("foo")     # => "--- foo\n...\n"
-{ :a => 'b'}.to_yaml  # => "---\n:a: b\n"
+# Upload data (example: printing it)
+puts data
+
+# Modify data (example: add a new key-value pair)
+data['new_key'] = 'new_value'
+
+# Upload data back to YAML file
+File.open('example.yml', 'w') { |file| file.write(data.to_yaml) }
+
 ```
 
 ## Java
 
+Make sure you have the SnakeYAML library in your project. You can add it using Maven:
+
+```xml
+<dependency>
+    <groupId>org.yaml</groupId>
+    <artifactId>snakeyaml</artifactId>
+    <version>1.28</version>
+</dependency>
+```
+
 ```java
-Yaml yaml = new Yaml();
-InputStream inputStream = this.getClass()
-  .getClassLoader()
-  .getResourceAsStream("customer.yaml");
-Map<String, Object> obj = yaml.load(inputStream);
-System.out.println(obj);
+import org.yaml.snakeyaml.Yaml;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+
+public class YAMLExample {
+    public static void main(String[] args) throws IOException {
+        // Parse YAML file
+        try (InputStream input = new FileInputStream("example.yml")) {
+            Yaml yaml = new Yaml();
+            Map<String, Object> data = yaml.load(input);
+
+            // Upload data (example: printing it)
+            System.out.println(data);
+
+            // Modify data (example: add a new key-value pair)
+            data.put("new_key", "new_value");
+
+            // Upload data back to YAML file
+            yaml.dump(data, writer);
+        }
+    }
+}
 ```
 
 ## Groovy
 
 ```groovy
-import groovy.yaml.YamlSlurper
+@Grab('org.yaml:snakeyaml:1.28')
 
-def configYaml = '''\
----
-application: "Sample App"
-users:
-- name: "mrhaki"
-  likes:
-  - Groovy
-  - Clojure
-  - Java
-- name: "Hubert"
-  likes:
-  - Apples
-  - Bananas
-connections:
-- "WS1"
-- "WS2"
-'''
+import org.yaml.snakeyaml.Yaml
 
-// Parse the YAML.
-def config = new YamlSlurper().parseText(configYaml)
+// Parse YAML file
+def yaml = new Yaml()
+def data = yaml.load(new File('example.yml').text)
 
-assert config.application == 'Sample App'
+// Upload data (example: printing it)
+println data
 
-assert config.users.size() == 2
-assert config.users[0] == [name: 'mrhaki', likes: ['Groovy', 'Clojure', 'Java']]
-assert config.users[1] == [name: 'Hubert', likes: ['Apples', 'Bananas']]
+// Modify data (example: add a new key-value pair)
+data.put("new_key", "new_value")
 
-assert config.connections == ['WS1', 'WS2']
+// Upload data back to YAML file
+new File('example.yml').text = new Yaml().dump(data)
 ```
 
+## Node.js
 
-> - XML, JSON and YAML are the most popular data serialization languages. This means we use them to represent data structures and values, which enables data storage, transfer and distribution, often for use in configurations.
-> - XML is a markup language, whereas JSON and YAML are data formats. XML uses tags to define the elements and stores data in a tree structure, whereas data in JSON is stored like a map with key/value pairs. YAML, on the other hand, allows representation of data both in list or sequence format and in the form of a map with key/value pairs.
+Make sure you have the js-yaml library installed. You can install it using npm
+
+`npm install js-yaml`
+
+```js
+const fs = require('fs');
+const yaml = require('js-yaml');
+
+// Parse YAML file
+const data = yaml.safeLoad(fs.readFileSync('example.yml', 'utf8'));
+
+// Upload data (example: printing it)
+console.log(data);
+
+// Modify data (example: add a new key-value pair)
+data['new_key'] = 'new_value';
+
+// Upload data back to YAML file
+fs.writeFileSync('example.yml', yaml.safeDump(data));
+
+```
+
+## C #
+
+Make sure you have the YamlDotNet library in your project. You can add it using NuGet:
+
+`Install-Package YamlDotNet`
+
+```csharp
+using System;
+using System.IO;
+using YamlDotNet.Serialization;
+
+class Program
+{
+    static void Main()
+    {
+        // Parse YAML file
+        var deserializer = new DeserializerBuilder().Build();
+        var data = deserializer.Deserialize<Dictionary<string, object>>(
+            new StreamReader("example.yml"));
+
+        // Upload data (example: printing it)
+        foreach (var kvp in data)
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+
+        // Modify data (example: add a new key-value pair)
+        data["new_key"] = "new_value";
+
+        // Upload data back to YAML file
+        var serializer = new SerializerBuilder().Build();
+        File.WriteAllText("example.yml", serializer.Serialize(data));
+    }
+}
+
+```
