@@ -3,7 +3,7 @@
 
 # Microsoft XDR Defined
 
-Microsoft Defender XDR is an **eXtended detection and response** (XDR) solution that automatically collects, correlates, and analyzes signal, threat, and alert data from across your Microsoft 365 environment, including endpoint, email, applications, and identities. It leverages artificial intelligence (AI) and automation to automatically stop attacks, and remediate affected assets into a safe state.
+Microsoft Defender XDR is an **eXtended Detection and Response** (XDR) solution that automatically collects, correlates, and analyzes signal, threat, and alert data from across your Microsoft 365 environment, including endpoint, email, applications, and identities. It leverages artificial intelligence (AI) and automation to automatically stop attacks, and remediate affected assets into a safe state.
 
 Microsoft Defender XDR is a Cloud-based, unified, pre- and post-breach enterprise defense suite. It coordinates prevention, detection, investigation, and response across endpoints, identities, apps, email, collaborative applications, and all of their data to provide integrated protection against sophisticated attacks.
 
@@ -51,12 +51,15 @@ In the illustration:
 ![M365-defender-eval-threat-chain][img1]
 
 Exchange Online Protection, part of Microsoft Defender for Office 365, can detect the phishing email and use mail flow rules (also known as transport rules) to make certain it never arrives in the Inbox.
+
 Defender for Office 365 uses Safe Attachments to test the attachment and determine that it's harmful, so the mail that arrives either isn't actionable by the user, or policies prevent the mail from arriving at all.
+
 Defender for Endpoint manages devices that connect to the corporate network and detect device and network vulnerabilities that might otherwise be exploited.
+
 Defender for Identity takes note of sudden account changes like privilege escalation, or high-risk lateral movement. It also reports on easily exploited identity issues like unconstrained Kerberos delegation, for correction by the security team.
+
 Microsoft Defender for Cloud Apps notices anomalous behavior like impossible-travel, credential access, and unusual download, file share, or mail forwarding activity and reports these to the security team.
 
--
 
 # Reference
 
