@@ -3,6 +3,7 @@
 
 - [Job Roles](#job-roles)
 - [DevOps](#devops)
+  - [DevOps Engineer Good Behaviours](#devops-engineer-good-behaviours)
 - [SRE](#sre)
 - [DLP Engineer](#dlp-engineer)
   - [indset of a DLP Security Engineer](#indset-of-a-dlp-security-engineer)
@@ -69,6 +70,70 @@ Additional Characteristics:
 - Continuous learning: The field of DevOps is constantly evolving, so a commitment to continuous learning and upskilling is crucial.
 
 ---
+
+## DevOps Engineer Good Behaviours
+
+
+```
+• Collaborate effectively with team members from diverse backgrounds and skillsets, treating everyone with courtesy and understanding.
+• Actively listen to feedback and concerns, considering different perspectives before making decisions.
+• Acknowledge and appreciate the contributions of others, both within the team and across the organization.
+• Celebrate successes and milestones, recognizing the collective effort behind achievements.
+
+• Always be honest and transparent in your communication and actions.
+• Take ownership of mistakes, learning from them and actively seeking solutions.
+• Follow ethical coding practices and advocate for responsible use of technology.
+• Report any security vulnerabilities or unethical behavior you encounter.
+
+• Focus on delivering value to stakeholders, prioritizing the needs of users and the organization.
+• Be proactive in identifying and addressing problems, taking initiative to improve processes and systems.
+• Contribute to open-source projects or knowledge sharing initiatives to benefit the broader tech community.
+• Mentor and support less experienced team members, helping them learn and grow.
+
+• Continuously strive to improve your skills and knowledge, staying up-to-date with the latest technologies and best practices.
+• Deliver high-quality work, taking pride in your craftsmanship and attention to detail.
+• Embrace challenges and complex problems, seeking solutions that are innovative and efficient.
+• Set and achieve ambitious goals, pushing yourself to exceed expectations and deliver exceptional results.
+
+• Use resources responsibly, optimizing infrastructure and minimizing waste.
+• Implement sustainable practices throughout the development and deployment process.
+• Advocate for responsible data usage and privacy protection.
+• Promote environmental awareness and sustainability initiatives within the organization.
+```
+
+Ethical code practices in software development encompass a collection of principles and guidelines that developers follow to ensure their work aligns with moral and social responsibility. These practices guide the creation and development of software tools and applications in a way that benefits society and minimizes potential harm. Here are some key aspects of ethical code practices:
+
+Respecting User Privacy:
+- Protecting user data and ensuring their privacy: This includes implementing strong security measures, obtaining informed consent, and being transparent about data collection and usage.
+- Avoiding discriminatory algorithms and practices: Developers should be mindful of potential biases in their code and work to create inclusive and equitable solutions.
+
+Transparency and Openness:
+- Documenting code clearly and thoroughly: This allows others to understand and audit the code's functionality, promoting trust and transparency.
+- Being open about potential risks and limitations: Developers should acknowledge the inherent risks associated with technology and inform users about potential unintended consequences.
+
+Avoiding Harm and Malice:
+- Refusing to develop software for malicious purposes: This includes tools for surveillance, discrimination, or manipulation.
+- Considering the potential societal impact of their work: Developers should be mindful of how their creations could be misused and take steps to mitigate these risks.
+
+Fairness and Equity:
+- Creating accessible and inclusive software: Developers should consider the needs of diverse users and avoid creating barriers based on ability, language, or background.
+- Avoiding unfair competition and unethical business practices: Software should be developed with ethical considerations in mind, not just profit maximization.
+
+Environmental Sustainability:
+- Optimizing code for efficiency and resource usage: This minimizes the environmental impact of software development and operation.
+- Promoting sustainable practices and technologies: Developers should be aware of the environmental impact of their work and choose solutions that minimize harm.
+
+Professional Responsibility:
+- Maintaining professional integrity and honesty: This includes adhering to ethical coding standards and reporting any observed unethical practices.
+- Continuously learning and upskilling: Staying up-to-date with emerging technologies and ethical considerations is crucial for responsible development.
+
+Collaboration and Sharing:
+- Collaborating with peers and stakeholders to identify and address ethical concerns: Shared knowledge and experiences can help create more ethical software development practices.
+- Contributing to open-source projects and sharing knowledge: This enables the spread of ethical practices and benefits the broader software development community.
+
+Remember, ethical code practices are an ongoing journey, not a destination. By adhering to these principles and actively seeking to improve their ethical awareness, developers can play a critical role in ensuring technology serves humanity in a positive and responsible way.
+
+
 
 # SRE
 
