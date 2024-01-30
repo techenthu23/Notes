@@ -6,8 +6,6 @@
 - [Performance Matrix for Security Engineer](#performance-matrix-for-security-engineer)
   - [Questions for Evaluation](#questions-for-evaluation)
 - [Providing Comments](#providing-comments)
-- [KPI for DLP security engineer](#kpi-for-dlp-security-engineer)
-- [KPI for SIEM Engineer](#kpi-for-siem-engineer)
 - [Examples](#examples)
 - [Risk and Control Objectives for CSO Security Engineer](#risk-and-control-objectives-for-cso-security-engineer)
 - [Setting up the tone for PD](#setting-up-the-tone-for-pd)
@@ -226,76 +224,6 @@ From a line manager's perspective, aspects to consider when providing commendati
 Tailor the commendations based on specific achievements or strengths demonstrated by the team member, providing specific examples to reinforce your feedback.
 
 ---
-
-# KPI for DLP security engineer
-
-Effective Key Performance Indicators (KPIs) for a DLP security engineer should cover different aspects of their role, including prevention, detection, response, and overall program effectiveness. Here are some key areas to consider:
-
-Data Loss Prevention Effectiveness:
-
-Incident prevention ratio: Calculate the ratio of successfully thwarted data incidents to the total number of attempts. This measures the DLP system's ability to proactively stop data leaks.
-False positives and negatives: Monitor the rate of alerts identified as incorrect (false positives) or missed actual incidents (false negatives).
-Time to remediation: Track the average time to resolve a detected data leak incident, including investigation and containment.
-Policy and Configuration Management:
-
-Data classification levels: Track the percentage of data sources (databases, file shares, endpoints) with proper data classification applied.
-Policy coverage: Monitor the percentage of user activities and sensitive data types covered by DLP policies.
-Policy violation rate: Measure the frequency of incidents triggered by policy violations, indicating potential risks or over-sensitivity.
-User Awareness and Training:
-
-Security awareness training completion rate: Track the percentage of employees who have completed necessary data security training.
-Phishing simulation click rate: Use simulated phishing attacks to gauge employee susceptibility to data loss threats and measure the effectiveness of training.
-Helpdesk tickets related to DLP incidents: Monitor the number of user inquiries or complaints regarding DLP policies or alerts.
-Technical Skills and System Administration:
-
-DLP agent deployment rate: Track the percentage of endpoints where DLP agents are successfully deployed and operational.
-DLP system uptime: Monitor the system's availability and performance to ensure continuous data protection.
-Log review and analysis rate: Measure the frequency and efficiency of reviewing DLP logs to identify potential incidents and trends.
-Additional Considerations:
-
-Align KPIs with your organization's specific security goals and data types.
-Regularly review and adjust KPIs as your DLP program matures and security landscape evolves.
-Use a dashboard or visualization tool to track and present KPI data for easy interpretation.
-Ensure transparency and communication of KPIs to team members to encourage ownership and improvement.
-By implementing these key KPIs, you can effectively measure the performance of your DLP security engineer, identify areas for improvement, and demonstrate the value of your DLP program to stakeholders.
-
----
-
-# KPI for SIEM Engineer
-
-For a Security Information and Event Management (SIEM) engineer, key performance indicators (KPIs) should align with the responsibilities and objectives of effectively managing and securing an organization's information and events. Here are some potential KPIs for a SIEM engineer:
-
-1. **Incident Detection and Response Time:**
-   - KPI: Reduce the average time to detect and respond to security incidents by [specific percentage] compared to the previous quarter/year.
-
-2. **False Positive Rate:**
-   - KPI: Maintain a false positive rate below [specific percentage], ensuring efficient use of resources and minimizing unnecessary alerts.
-
-3. **SIEM Rule Effectiveness:**
-   - KPI: Regularly review and optimize SIEM rules to ensure [percentage] of rules are effective in detecting and alerting on relevant security events.
-
-4. **Threat Intelligence Integration:**
-   - KPI: Increase the integration of threat intelligence feeds to [specific percentage], enhancing the SIEM's ability to identify and respond to emerging threats.
-
-5. **Log Ingestion and Processing:**
-   - KPI: Ensure the SIEM processes logs from [percentage] more devices/systems compared to the previous period, expanding coverage and visibility.
-
-6. **Incident Investigation Time:**
-   - KPI: Decrease the average time taken to investigate and resolve security incidents by [specific percentage] to enhance overall incident response efficiency.
-
-7. **Compliance Monitoring:**
-   - KPI: Maintain a compliance rate of [specific percentage] by continuously monitoring and addressing security events that impact regulatory requirements.
-
-8. **User Training and Awareness:**
-   - KPI: Implement and track a user training program, aiming to reduce the number of security incidents caused by user-related issues by [specific percentage].
-
-9. **Threat Hunting Success:**
-   - KPI: Demonstrate success in proactive threat hunting exercises, identifying [specific number] previously undetected threats within a given time frame.
-
-10. **SIEM Availability and Performance:**
-    - KPI: Maintain SIEM system availability above [specific percentage], and optimize system performance to handle increasing data volumes without degradation.
-
-These KPIs are designed to assess the SIEM engineer's effectiveness in managing security incidents, optimizing the SIEM system, and contributing to the overall security posture of the organization. Adjust the percentages and metrics based on the specific goals and priorities of your organization.
 
 "Great job on optimizing search queries for improved performance. Consider enhancing documentation to make your solutions more accessible to the team. Keep up the good work!"
 
@@ -873,6 +801,7 @@ Remember:
 By starting the conversation with thoughtful questions, you can lay the groundwork for a meaningful and productive year-end performance review that benefits both the employee and the organization.
 
 # Setting up the tone for PD
+
 Here are some specific questions you can ask at the beginning of a year-end performance review to set the right tone, depending on your desired outcome:
 
 To Encourage Reflection and Openness:
