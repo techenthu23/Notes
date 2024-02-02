@@ -26,6 +26,7 @@
     - [Checking Default Context](#checking-default-context)
   - [Network port labels](#network-port-labels)
   - [Information Gathering Tools](#information-gathering-tools)
+- [SELinux settings with booleans](#selinux-settings-with-booleans)
 
 # SELinux
 
@@ -331,7 +332,7 @@ to permanently change SELinux mode to permissive, Ensure `selinux=0` or `enforci
 
 # Identifying SELinux denials
 
-ollow only the necessary steps from this procedure; in most cases, you need to perform just step 1.
+Follow only the necessary steps from this procedure; in most cases, you need to perform just step 1.
 
 Procedure
 
@@ -702,14 +703,14 @@ semodule -e permissivedomains
  The `semanage fcontext` command is used to change the SELinux context of files. When using targeted policy, changes are written to files located in the `/etc/selinux/targeted/contexts/files/` directory:
 
 - The `file_contexts` file specifies default contexts for many files, as well as contexts updated via `semanage fcontext`.
-- The `file_contexts.local` file stores contexts to newly created files and directories not found in `file_contexts`. 
+- The `file_contexts.local` file stores contexts to newly created files and directories not found in `file_contexts`.
 
-Two utilities read these files. The `setfiles` utility is used when a file system is relabeled and the `restorecon` utility restores the default SELinux contexts. This means that changes made by `semanage fcontext` are persistent, even if the file system is relabeled. SELinux policy controls whether users are able to modify the SELinux context for any given file. 
-
+Two utilities read these files. The `setfiles` utility is used when a file system is relabeled and the `restorecon` utility restores the default SELinux contexts. This means that changes made by `semanage fcontext` are persistent, even if the file system is relabeled. SELinux policy controls whether users are able to modify the SELinux context for any given file.
 
 - To get help `man semanage-fcontext`
 - To list current context `semanage fcontext -l`
 - Set a file type on a directory
+
 ```
 
 semanage fcontext --add -t samba_share_t "/path/to/dir(/.*)?" && restorecon -RF /path/to/dir
@@ -719,14 +720,15 @@ semanage fcontext -a -t httpd_sys_content_t "/path(/.*)?" && restorecon -RF /pat
 
 The `semanage fcontext -a -t samba_share_t` command adds an entry to `/etc/selinux/targeted/contexts/files/file_contexts.local`
 
-
 - Create an alternate location (equivalency rule) based on an existing directory (which is useful because it recursively includes rules)
+
 ```
 
 semanage fcontext -a -e /var/www /web && restorecon -RF /web
 semanage fcontext -a -e /home /our/home && restorecon -RF /our/home
 
 ```
+
 - Check what a particular [source] process domain can do to a particular [target] file type
 
 ```
@@ -751,6 +753,7 @@ Policy must explicitly allow confined services specific access to certain networ
 
 - For help `man semanage-port`
 - Check for port labels for a particular domain/service
+
     ```
     semanage port -l | grep http   # Look for http-labeled ports
     semanage port -l | grep ssh   # Look for ssh-labeled ports
@@ -776,6 +779,7 @@ Get a breakdown of a policy such as Booleans, types, number of classes, allow ro
 `seinfo`
 
 This can also list number of types
+
 ```
 seinfo -adomain -x
 
@@ -783,6 +787,7 @@ seinfo -aunconfined_domain_type -x
 
 seinfo --permissive -x
 ```
+
 Search particular type in policy
 
 ```
@@ -790,3 +795,18 @@ sesearch
 sesearch --role_allow -t httpd_sys_content_t /etc/selinux/targeted/policy/policy.31
 sesearch --allow # get allowed rules
 ```
+
+# SELinux settings with booleans
+
+SELinux is built around the concept of security **labels** and **types**. When you give a file an SELinux label of one type, then a process bearing a label of a different type cannot interact with it, even though the file's permissions on disk might be as permissive as 777
+
+SELinux uses **policies** to decide what labels and types are compatible with one another. For instance, if your system has the default policy that disallows an HTTP daemon to interact with users' home directories, then user home directories are essentially untouchable by httpd even though you may have a config file saying otherwise.
+
+When SELinux registers an attempted violation of a policy, it logs the decision as an Access Vector Cache (AVC). Emsure you installe the setroubleshoot package first
+
+All SELinux boolean values are viewable as a file in your filesystem. They're expressed as files in the /sys/fs/selinux/booleans directory:
+
+| Command                   | Description                         |
+| ------------------------- | ----------------------------------- |
+| `semanage boolean --list` | to view available boolean options   |
+| `semanage boolean -l -C`  | To view default and custom settings |
