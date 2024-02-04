@@ -4,8 +4,8 @@
 - [Policy-as-Code vs. Infrastructure as Code](#policy-as-code-vs-infrastructure-as-code)
 - [Benefits of Policy-as-Code](#benefits-of-policy-as-code)
 - [How to Use Policy-As-Code](#how-to-use-policy-as-code)
-- [Open Policy Agent (OPA)](#open-policy-agent-opa)
-  - [How OPA Works](#how-opa-works)
+
+A ___policy___ is a set of rules that governs the behavior of a service. ___Policy enablement___ empowers users to read, write, and manage these rules without needing specialized development or operational expertise. When your users can implement policies without recompiling your source code, then your service is policy enabled.
 
 Policy-as-code is an approach to policy management in which policies are defined, updated, shared, and enforced using code. By leveraging code-based automation instead of relying on manual processes to manage policies, policy-as-code allows teams to move more quickly and reduce the potential for mistakes due to human error.
 
@@ -114,36 +114,3 @@ When planning to implement Policy as Code (PaC), it's crucial to carefully asses
 
 By following this plan, you'll be better equipped to select the right tools for your Policy as Code implementation, ensuring alignment with your organization's policies, infrastructure, and operational requirements.
 
-# Open Policy Agent (OPA)
-
-Stop using a different policy language, policy model, and policy API for every product and service you use. Use OPA for a unified toolset and framework for policy across the cloud native stack.
-
-Whether for one service or for all your services, use OPA to decouple policy from the service's code so you can release, analyze, and review policies (which security and compliance teams love) without sacrificing availability or performance.
-
-- __Language:__ OPA uses the Rego language, which is a declarative language specifically designed for expressing policies. Rego is easy to read and write, making it accessible to both developers and operations teams.
-
-- __Versatility:__ OPA is a versatile framework that can be integrated into various systems and cloud-native environments. It can be used for Kubernetes admission control, API authorization, data filtering, and more.
-
-- __Declarative Nature:__ OPA allows you to declare policies in a declarative manner. Instead of specifying how to achieve a result, you declare what the result should be, which aligns well with the principles of Policy as Code.
-
-- __Data-driven Policies:__ OPA allows you to write policies that consider complex data structures. This is beneficial for scenarios where policies depend on context or multiple sources of information.
-
-- __Integrations:__ OPA integrates seamlessly with different tools and platforms. For example, it can be used with Kubernetes through Gatekeeper, with Docker for image scanning, with cloud providers for resource validation, and more.
-
-- __Regularity Checking:__ OPA supports regularity checking, enabling you to express and enforce policies over hierarchical data structures.
-
-- __Testability:__ OPA comes with built-in testing features, allowing you to write unit tests for your policies to ensure they behave as expected.
-
-## How OPA Works
-
-1. __Define Policies:__ Write policies in Rego language. These policies express the desired state or conditions.
-
-2. __Integrate with Systems:__ Embed OPA into your systems, applications, or workflows where policy enforcement is needed.
-
-3. __Evaluate Policies:__ OPA evaluates policies against input data, making decisions based on the policy logic.
-
-4. __Enforce Policies:__ If the evaluation results in a decision, OPA enforces the decision according to the policy's specifications.
-
-5. __Policy Testing:__ Use OPA's testing capabilities to validate and ensure the correctness of your policies.
-
-By adopting OPA as a framework for Policy as Code, you can maintain policies in a code-like format, version control them, and automate their deployment and evaluation across diverse environments.
