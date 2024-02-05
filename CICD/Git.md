@@ -2,6 +2,10 @@
 
 - [Git](#git)
 - [git rebase and git merge with --ff-only](#git-rebase-and-git-merge-with---ff-only)
+- [what happens when you git merge a branch into another branch](#what-happens-when-you-git-merge-a-branch-into-another-branch)
+- [Git Credentials](#git-credentials)
+- [Git Internals - Environment Variables](#git-internals---environment-variables)
+- [References](#references)
 
 # git rebase and git merge with --ff-only
 
@@ -116,15 +120,14 @@ Choosing the right option:
 
 Remember to consider your specific situation and workflow when choosing an option. Consult your team's Git practices if unsure.
 
-
 # what happens when you git merge a branch into another branch
 
 **Purpose:**
 
 - `git merge` integrates changes from one branch (the source branch) into another branch (the target branch), combining their development histories.
 - It's commonly used to:
-    - Incorporate feature work done on a feature branch into the main codebase (usually `master` or `main`).
-    - Integrate changes from a remote repository (using `git pull`, which is essentially `git fetch` followed by `git merge`).
+  - Incorporate feature work done on a feature branch into the main codebase (usually `master` or `main`).
+  - Integrate changes from a remote repository (using `git pull`, which is essentially `git fetch` followed by `git merge`).
 
 **Workflow:**
 
@@ -154,6 +157,17 @@ Remember to consider your specific situation and workflow when choosing an optio
 - If there are no conflicts, `git merge new-feature` will create a new merge commit on `master`, incorporating the changes from `new-feature`.
 - If there are conflicts, you'll need to resolve them manually before proceeding.
 
+Git Environment variable GIT_MERGE_VERBOSITY controls the output for the recursive merge strategy. The allowed values are as follows:
+
+- 0 outputs nothing, except possibly a single error message.
+- 1 shows only conflicts.
+- 2 also shows file changes.
+- 3 shows when files are skipped because they haven’t changed.
+- 4 shows all paths as they are processed.
+- 5 and above show detailed debugging information.
+
+The default value is 2
+
 ---
 
 When merging a long-diverged feature branch with the main branch, avoiding conflicts entirely is difficult, but there are strategies to minimize them and make the process easier:
@@ -172,9 +186,9 @@ When merging a long-diverged feature branch with the main branch, avoiding confl
 
 **Additional Tips:**
 
-* **Use Clear Branch Names:** Descriptive branch names make it easier to understand what changes each branch contains and potential conflicts.
-* **Write Good Commit Messages:** Detailed commit messages explaining changes and decisions help in conflict resolution and understanding the history.
-* **Test Thoroughly:** Test your feature branch frequently, both before and after merging, to catch potential issues early and avoid introducing them to the main branch.
+- **Use Clear Branch Names:** Descriptive branch names make it easier to understand what changes each branch contains and potential conflicts.
+- **Write Good Commit Messages:** Detailed commit messages explaining changes and decisions help in conflict resolution and understanding the history.
+- **Test Thoroughly:** Test your feature branch frequently, both before and after merging, to catch potential issues early and avoid introducing them to the main branch.
 
 Remember, choosing the best approach depends on your specific situation and team workflow. Experiment and find what works best for you!
 
@@ -228,3 +242,50 @@ Here are three ways to get all the changes from the `main` branch into your feat
 
 ---
 
+# Git Credentials
+
+Git will sometimes need credentials from the user in order to perform operations; for example, it may need to ask for a username and password in order to access a remote repository over HTTP. Some remotes accept a personal access token or OAuth access token as a password. This manual describes the mechanisms Git uses to request these credentials, as well as some features to avoid inputting these credentials repeatedly.
+
+**REQUESTING CREDENTIALS**
+
+Without any credential helpers defined, Git will try the following strategies to ask the user for usernames and passwords:
+
+1) If the **GIT_ASKPASS** environment variable is set, the program specified by the variable is invoked. A suitable prompt is provided to the program on the command line, and the user’s input is read from its standard output.
+
+```bash
+GIT_ASKPASS=$(mktemp) && chmod a+rx $GIT_ASKPASS && export GIT_ASKPASS
+cat > $GIT_ASKPASS <<< '#!/bin/bash
+case "$1" in
+    Username*) exec echo "$USERNAME" ;;
+    Password*) exec echo "$PSW" ;;
+esac
+.
+```
+
+2) Otherwise, if the **core.askPass** configuration variable is set, its value is used as above.
+3) Otherwise, if the **SSH_ASKPASS** environment variable is set, its value is used as above.
+4) Otherwise, the user is prompted on the terminal.
+
+# Git Internals - Environment Variables
+
+Committing
+
+| Environment Variable  | Description |
+| :-------------------- | :---------- |
+| **Committing**        | The final creation of a Git commit object is usually done by git-commit-tree, which uses these environment variables as its primary source of information, falling back to configuration values only if these aren’t present.
+GIT_AUTHOR_NAME         | human-readable name in the “author” field.
+GIT_AUTHOR_EMAIL        | email for the “author” field.
+GIT_AUTHOR_DATE         | timestamp used for the “author” field.
+GIT_COMMITTER_NAME      | sets the human name for the “committer” field.
+GIT_COMMITTER_EMAIL     | email address for the “committer” field.
+GIT_COMMITTER_DATE      | used for the timestamp in the “committer” field.
+EMAIL                   | fallback email address in case the user.email configuration value isn’t set. If this isn’t set, Git falls back to the system user and host names.
+**Networking**          |  
+GIT_CURL_VERBOSE        | tells Git to emit all the messages generated by that library when Git uses the curl library to do network operations over HTTP
+GIT_SSL_NO_VERIFY       | tells Git not to verify SSL certificates
+GIT_HTTP_LOW_SPEED_LIMIT <br> GIT_HTTP_LOW_SPEED_TIME | If the data rate of an HTTP operation is lower than GIT_HTTP_LOW_SPEED_LIMIT bytes per second for longer than GIT_HTTP_LOW_SPEED_TIME seconds, Git will abort that operation. These values override the http.lowSpeedLimit and http.lowSpeedTime configuration values.
+GIT_MERGE_VERBOSITY     | controls the output for the recursive merge strategy. Value Range from 0 to 6
+
+# References
+
+- [Git Internals - Environment Variables](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
