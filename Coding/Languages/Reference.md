@@ -66,5 +66,50 @@ The reason we need a transpiler is that recoding a large program into another la
 | Output code is in assembly language and is readily executable after linking and decoding into machine language. | Output code is still in high-level programming language and requires a compiler to convert into low-abstraction assembly language. |
 | In a compiler, the source code is scanned, parsed, transformed into an abstract syntax tree semantically analyzed, then converted into an intermediate code, and finally into the assembly language. | In a transpiler, the source code is parsed, and transformed into an abstract syntax tree, which is then converted to an intermediate model. This then transforms into an abstract syntax tree of the target language and code is generated. |
 | Converting Java code into assembly language instructions is an example of compilation. | Converting Java code into C++ code is an example of transpilation. |
+---
+
+# Primitive
+
+In computer science, a primitive refers to a basic data type or operation that is built into a programming language or provided by the underlying hardware. Primitives are fundamental building blocks used to represent and manipulate data.
+
+Examples of primitives include:
+
+1. Basic data types such as integers, floating-point numbers, characters, and booleans.
+2. Arithmetic operations such as addition, subtraction, multiplication, and division.
+3. Logical operations such as AND, OR, and NOT.
+4. Control flow constructs such as loops and conditional statements.
+
+Primitives are essential for expressing more complex computations and algorithms in programming languages. They serve as the foundation upon which higher-level abstractions and data structures are built.
+---
+
+# MUTEX
+
+A mutex (short for mutual exclusion) is a synchronization primitive used in concurrent programming to control access to shared resources, such as variables or data structures, by multiple threads of execution. It ensures that only one thread can access the shared resource at a time, preventing race conditions and data inconsistencies.
+
+Mutexes typically provide two main operations: "lock" and "unlock." When a thread wants to access the shared resource, it acquires the mutex by locking it. If another thread has already locked the mutex, the requesting thread will wait until the mutex becomes available. Once the thread finishes using the shared resource, it releases the mutex by unlocking it, allowing other threads to acquire it.
+
+Mutexes are essential for coordinating access to shared resources in multi-threaded environments, ensuring data integrity and preventing conflicts between concurrent operations.
+
+In the context of the Linux kernel, a mutex implemented and managed by the kernel itself is typically referred to as a "kernel mutex." These kernel mutexes provide synchronization mechanisms within the kernel space to control access to shared resources among different kernel threads or processes. They function similarly to mutexes used in user space, but they operate within the kernel's environment and are designed to handle kernel-specific scenarios and requirements.
+
+There are several types of mutexes used in concurrent programming, each with its own characteristics and use cases:
+
+1. **Binary Mutex**: Also known as a binary semaphore, this type of mutex has only two states: locked and unlocked. It allows only one thread at a time to access a shared resource.
+
+2. **Counting Mutex**: Unlike a binary mutex, a counting mutex allows multiple threads to hold the lock simultaneously up to a certain limit, specified by its count. Once the limit is reached, additional threads attempting to acquire the lock will be blocked.
+
+3. **Recursive Mutex**: A recursive mutex allows a thread to acquire the lock multiple times from within the same thread without deadlocking. Each acquisition must be matched with a corresponding release to fully unlock the mutex.
+
+4. **Timed Mutex**: This type of mutex allows threads to attempt to acquire the lock with a timeout. If the lock cannot be acquired within the specified time, the operation fails, allowing the thread to continue execution without being blocked indefinitely.
+
+5. **Priority Inheritance Mutex**: In systems where threads have different priorities, priority inheritance mutexes ensure that a low-priority thread holding a mutex inherits the priority of a high-priority thread waiting for the same mutex. This prevents priority inversion and helps avoid priority-related issues in real-time systems.
+
+6. **Read/Write Mutex**: Also known as a readers-writer lock, this type of mutex distinguishes between readers (threads that only read shared data) and writers (threads that modify shared data). It allows multiple readers to hold the lock simultaneously but ensures that only one writer can hold the lock exclusively, preventing concurrent writes.
+
+These are some common types of mutexes used in concurrent programming, each designed to address specific synchronization requirements and scenarios.
 
 ---
+
+# FUTEX
+
+FUTEX (Fast Userspace Mutex) is a Linux kernel system call that provides a fast method for implementing basic synchronization between threads of the same process. It's commonly used for implementing synchronization primitives like mutexes and condition variables efficiently in user space. FUTEX operations typically involve waiting for a specific condition to become true or notifying other threads when a condition is met, all while minimizing kernel involvement to improve performance.
