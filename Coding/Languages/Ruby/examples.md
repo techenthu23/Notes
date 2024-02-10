@@ -151,6 +151,10 @@ resumed_data = resume_structure(flattened_data)
 # Output resumed structure
 puts JSON.pretty_generate(resumed_data)
 
+```
+
+```ruby
+
 require 'yaml'
 
 def flatten_yaml_keys(data, parent_key = nil)
@@ -190,4 +194,5 @@ flattened_keys = flatten_yaml_keys(parsed_data)
 flattened_keys.each do |key, value|
   puts "#{key}: #{value}"
 end
+
 ```
