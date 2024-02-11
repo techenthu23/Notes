@@ -196,3 +196,23 @@ flattened_keys.each do |key, value|
 end
 
 ```
+
+```ruby
+def deep_equal?(hash1, hash2)
+  return true if hash1 == hash2
+
+  return false unless hash1.is_a?(Hash) && hash2.is_a?(Hash)
+  return false unless hash1.keys.sort == hash2.keys.sort
+
+  hash1.keys.all? { |key| deep_equal?(hash1[key], hash2[key]) }
+end
+
+hash1 = { a: 1, b: { c: 2, d: { e: 3 } } }
+hash2 = { a: 1, b: { c: 2, d: { e: 3 } } }
+
+if deep_equal?(hash1, hash2)
+  puts "The nested hashes are identical."
+else
+  puts "The nested hashes are different."
+end
+```
