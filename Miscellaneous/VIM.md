@@ -29,6 +29,10 @@
   - [Diff](#diff)
 - [defaults.vim](#defaultsvim)
 - [Retaining the format as original source while paste in Vim](#retaining-the-format-as-original-source-while-paste-in-vim)
+- [Vimrc Configuration - Vim Code Editor Customisation](#vimrc-configuration---vim-code-editor-customisation)
+- [Map Keyboard Shortcuts in Vim](#map-keyboard-shortcuts-in-vim)
+- [Configuring Color Schemes](#configuring-color-schemes)
+- [vim.rc example](#vimrc-example)
 
 # Overview
 
@@ -528,4 +532,350 @@ If the autoindent is still messing with you.
 ```
 set autoindent
 set smartindent
+```
+
+# Vimrc Configuration - Vim Code Editor Customisation
+
+The conventional wisdom for vimrc is to add a .vimrc dotfile in the root directory ~/.vimrc (it might be different depending on your OS).
+
+Behind the scene, Vim looks at multiple places for a vimrc file. Here are the places that Vim checks:
+
+- `$VIMINIT`
+- `$HOME/.vimrc`
+- `$HOME/.vim/vimrc`
+- `$EXINIT`
+- `$HOME/.exrc`
+- `$VIMRUNTIME/default.vim`
+
+When you start Vim, it will check the above six locations in that order for a vimrc file. The first found vimrc file will be used and the rest is ignored.
+
+In the nutshell, a vimrc is a collection of:
+
+- Plugins
+- Settings
+- Custom Functions
+- Custom Commands
+- Mappings
+
+There are other things not mentioned above, but in general, this covers most use cases.
+
+Over time, your vimrc will grow large and become convoluted. There are two ways to keep your vimrc to look clean:
+
+- Split your vimrc into several files.
+- Fold your vimrc file.
+
+__Splitting Your Vimrc__
+
+You can split your vimrc to multiple files using Vim's source command. This command reads command-line commands from the given file argument. For example inside `~/.vimrc`
+
+```
+source $HOME/.vim/settings/plugins.vim
+source $HOME/.vim/settings/configs.vim
+source $HOME/.vim/settings/functions.vim
+source $HOME/.vim/settings/mappings.vim
+```
+
+__Keeping One Vimrc File__
+
+If you prefer to keep one vimrc file to keep it portable, you can use the marker folds to keep it organized. A marker fold uses `{{{` and `}}}` to indicate the starting and ending folds (don't forget to comment them with `"`).Add this at the top of your vimrc:
+
+Refer example [vim.rc example](#vimrc-example)
+
+Now, once you move your cursor on a fold you can press:
+
+- `zo` to open a single fold under the cursor.
+- `zc` to close the fold under the cursor.
+- `zR` to open all folds.
+- `zM` to close all folds.
+
+Type `:help folding` for more information.
+
+__Running Vim With Or Without Vimrc And Plugins__
+
+| Command | Description |
+| :------ | :---------- |
+`vim -u NONE`     | run Vim without both vimrc and plugins
+`vim -u NORC`     | launch Vim without vimrc but with plugins
+`vim --noplugin`  | run Vim with vimrc but without plugins
+`vim -u ~/.vimrc-backup` | run Vim with a different vimrc, say `~/.vimrc-backup`
+
+# Map Keyboard Shortcuts in Vim
+
+Key mapping syntax is like this:
+
+`map_mode <what_you_type> <what_is_executed>`
+
+few popular mapping modes and probably the most useful and important.
+
+- `nnoremap` – Allows you to map keys in normal mode.
+- `inoremap` – Allows you to map keys in insert mode.
+- `vnoremap` – Allows you to map keys in visual mode
+
+A common mapping example is to map 'jj' to the escape key. You will be pressing the escape key a lot. The escape key is in the far corner of the keyboard. The letter 'j' is in the middle of the keyboard so it is easier to press 'jj' instead of reaching for the escape key.
+
+This is how you would map the escape key to jj.
+
+`inoremap jj <esc>`
+
+
+# Configuring Color Schemes
+
+Installing a color scheme is a simple as adding a `<colorscheme>.vim` file to the `~/.vim/colors/` directory. To set the color scheme, type this command: `:colorscheme molokai`
+
+
+where
+- `%F` – Display the full path of the current file.
+- `%M `– Modified flag shows if file is unsaved.
+- `%Y `– Type of file in the buffer.
+- `%R` – Displays the read-only flag.
+- `%b` – Shows the ASCII/Unicode character under cursor.
+- `0x%B` – Shows the hexadecimal character under cursor.
+- `%l` – Display the row number.
+- `%c` – Display the column number.
+- `%p%%` – Show the cursor percentage from the top of the file.
+
+# vim.rc example
+
+some basic settings that will improve your editing experience
+
+```
+" Disable compatibility with vi which can cause unexpected issues.
+set nocompatible
+
+" Enable type file detection. Vim will be able to try to detect the type of file is use.
+filetype on
+
+" Enable plugins and load plugin for the detected file type.
+filetype plugin on
+
+" Load an indent file for the detected file type.
+filetype indent on
+
+" Turn syntax highlighting on.
+syntax on
+
+" Add numbers to the file.
+set number
+
+" Highlight cursor line underneath the cursor horizontally.
+set cursorline
+
+" Highlight cursor line underneath the cursor vertically.
+set cursorcolumn
+
+" Set shift width to 4 spaces.
+set shiftwidth=4
+
+" Set tab width to 4 columns.
+set tabstop=4
+
+" Use space characters instead of tabs.
+set expandtab
+
+" Do not save backup files.
+set nobackup
+
+" Do not let cursor scroll below or above N number of lines when scrolling.
+set scrolloff=10
+
+" Do not wrap lines. Allow long lines to extend as far as the line goes.
+" set nowrap
+
+" While searching though a file incrementally highlight matching characters as you type.
+set incsearch
+
+" Ignore capital letters during search.
+set ignorecase
+
+" Override the ignorecase option if searching for capital letters.
+" This will allow you to search specifically for capital letters.
+set smartcase
+
+" Show partial command you type in the last line of the screen.
+set showcmd
+
+" Show the mode you are on the last line.
+set showmode
+
+" Show matching words during a search.
+set showmatch
+
+" Use highlighting when doing a search.
+set hlsearch
+
+" Set the commands to save in history default number is 20.
+set history=1000
+
+" Enable auto completion menu after pressing TAB.
+set wildmenu
+
+" Make wildmenu behave like similar to Bash completion.
+set wildmode=list:longest
+
+" There are certain files that we would never want to edit with Vim.
+" Wildmenu will ignore files with these extensions.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
+
+" PLUGINS ---------------------------------------------------------------- {{{
+
+call plug#begin('~/.vim/plugged')
+
+  Plug 'dense-analysis/ale'
+
+  Plug 'preservim/nerdtree'
+
+call plug#end()
+
+" }}}
+
+" MAPPINGS --------------------------------------------------------------- {{{
+
+" Set the backslash as the leader key.
+let mapleader = "\"
+
+" Press \\ to jump back to the last cursor position.
+nnoremap <leader>\ ``
+
+" Press \p to print the current file to the default printer from a Linux operating system.
+" View available printers:   lpstat -v
+" Set default printer:       lpoptions -d <printer_name>
+" <silent> means do not display output.
+nnoremap <silent> <leader>p :%w !lp<CR>
+
+" Type jj to exit insert mode quickly.
+inoremap jj <Esc>
+
+" Press the space bar to type the : character in command mode.
+nnoremap <space> :
+
+" Pressing the letter o will open a new line below the current one.
+" Exit insert mode after creating a new line above or below the current line.
+nnoremap o o<esc>
+nnoremap O O<esc>
+
+" Center the cursor vertically when moving to the next word during a search.
+nnoremap n nzz
+nnoremap N Nzz
+
+" Yank from cursor to the end of line.
+nnoremap Y y$
+
+" Map the F5 key to run a Python script inside Vim.
+" We map F5 to a chain of commands here.
+" :w saves the file.
+" <CR> (carriage return) is like pressing the enter key.
+" !clear runs the external clear screen command.
+" !python3 % executes the current file with Python.
+nnoremap <f5> :w <CR>:!clear <CR>:!python3 % <CR>
+
+" You can split the window in Vim by typing :split or :vsplit.
+" Navigate the split view easier by pressing CTRL+j, CTRL+k, CTRL+h, or CTRL+l.
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+" Resize split windows using arrow keys by pressing:
+" CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
+noremap <c-up> <c-w>+
+noremap <c-down> <c-w>-
+noremap <c-left> <c-w>>
+noremap <c-right> <c-w><
+
+" NERDTree specific mappings.
+" Map the F3 key to toggle NERDTree open and close.
+nnoremap <F3> :NERDTreeToggle<cr>
+
+" Have nerdtree ignore certain files and directories.
+let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
+
+" }}}
+
+" VIMSCRIPT -------------------------------------------------------------- {{{
+
+" Enable the marker method of folding.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" If the current file type is HTML, set indentation to 2 spaces.
+autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
+
+" If Vim version is equal to or greater than 7.3 enable undofile.
+" This allows you to undo changes to a file even after saving it.
+if version >= 703
+    set undodir=~/.vim/backup
+    set undofile
+    set undoreload=10000
+endif
+
+" You can split a window into sections by typing `:split` or `:vsplit`.
+" Display cursorline and cursorcolumn ONLY in active window.
+augroup cursor_off
+    autocmd!
+    autocmd WinLeave * set nocursorline nocursorcolumn
+    autocmd WinEnter * set cursorline cursorcolumn
+augroup END
+
+" If GUI version of Vim is running set these options.
+if has('gui_running')
+
+    " Set the background tone.
+    set background=dark
+
+    " Set the color scheme.
+    colorscheme molokai
+
+    " Set a custom font you have installed on your computer.
+    " Syntax: <font_name>\ <weight>\ <size>
+    set guifont=Monospace\ Regular\ 12
+
+    " Display more of the file by default.
+    " Hide the toolbar.
+    set guioptions-=T
+
+    " Hide the the left-side scroll bar.
+    set guioptions-=L
+
+    " Hide the the left-side scroll bar.
+    set guioptions-=r
+
+    " Hide the the menu bar.
+    set guioptions-=m
+
+    " Hide the the bottom scroll bar.
+    set guioptions-=b
+
+    " Map the F4 key to toggle the menu, toolbar, and scroll bar.
+    " <Bar> is the pipe character.
+    " <CR> is the enter key.
+    nnoremap <F4> :if &guioptions=~#'mTr'<Bar>
+        \set guioptions-=mTr<Bar>
+        \else<Bar>
+        \set guioptions+=mTr<Bar>
+        \endif<CR>
+
+endif
+
+" }}}
+
+" STATUS LINE ------------------------------------------------------------ {{{
+
+" Clear status line when vimrc is reloaded.
+set statusline=
+
+" Status line left side.
+set statusline+=\ %F\ %M\ %Y\ %R
+
+" Use a divider to separate the left side from the right side.
+set statusline+=%=
+
+" Status line right side.
+"set statusline+=\ ascii:\ %b\ hex:\ 0x%B\ row:\ %l\ col:\ %c\ percent:\ %p%%
+
+" Show the status on the second to last line.
+set laststatus=2
+
+" }}}
 ```

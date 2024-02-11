@@ -17,4 +17,4 @@ if you want to use this regex instead, you may enable it in the icon: `.*` and u
 | `e.+e`            |         | `e.+e` matches "eede" in "feeder" but finds no matches in "feed". Match any character one or more times. |
 | `car\r?$`         |         | `car\r?$` matches "car" only when it appears at the end of a line                                        |
 | `real(?!ity)`     |         | Invalidate a match. `real(?!ity)` matches "real" in "realty" and "really" but not in "reality." It also finds the second "real" (but not the first "real") in "realityreal".
-
+|`^\s{0,}(.*):`       | `- __$1__:` | Converts pattern with containing a colon in a punctuation to Markdown bold

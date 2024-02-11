@@ -1,15 +1,27 @@
----
-layout: default
-title:  "Vocabulary"
----
+- [Scaffolding, scaffold](#scaffolding-scaffold)
+- [Scrum](#scrum)
+- [Deployment Strategies](#deployment-strategies)
+  - [The Basic Deployment](#the-basic-deployment)
+  - [Multi-Service Deployment](#multi-service-deployment)
+  - [Rolling Depoyment](#rolling-depoyment)
+  - [Blue—Green Deployment](#bluegreen-deployment)
+  - [Canary Deployment](#canary-deployment)
+  - [A/B resting](#ab-resting)
+- [IDE](#ide)
+- [Python Virtual Environment](#python-virtual-environment)
+- [Cookie](#cookie)
+  - [Different types of cookies - Magic Cookies and HTTP Cookies](#different-types-of-cookies---magic-cookies-and-http-cookies)
+- [Security Standards](#security-standards)
+- [REPL](#repl)
+- [XDG](#xdg)
 
-### Scaffolding, scaffold
+# Scaffolding, scaffold
 
 Scaffolding, also called scaffold or staging, is a temporary structure used to support a work crew and materials to aid in the construction, maintenance and repair of buildings, bridges and all other man-made structures.
 
 In education, scaffolding refers to a variety of instructional techniques used to move students progressively toward stronger understanding and, ultimately, greater independence in the learning process
 
-### Scrum
+# Scrum
 
   Scrum is used to divide a sophisticated software and product development task into smaller chunks using iterations and increasing practices. Scrum consist of three roles, such as:
 
@@ -140,3 +152,11 @@ The HTTP cookie is what we currently use to manage our online experiences. It is
 
 IT practitioners and managers in the US government are challenged with delivering high-quality applications quickly while maintaining compliance with a plethora of federal standards and certifications such as FIPS 140-2, FISMA, FedRAMP, and more- Public Sector Government departments, as well as many private companies who do business with them, must comply with the Security Technical Implementation Guide (STIG) published by the Defense Information Systems Agency (DISA).
 Compliance to these standards greatly slows their ability to deliver infrastructure and applications and align their current environments to a government approved "Authorized to Operate" (ATO) state. To deliver value at velocity, integration of compliance into their development and operational processes accelerates those deliverables and aligns their specific production environments to the desired state.
+
+# REPL
+
+REPL stands for `Read-Eval-Print Loop`. It's a simple yet powerful interactive computer programming environment that takes single user inputs (expressions), evaluates them, and returns the results to the user. Key Characteristices: Interactivity, Immutability, Immediate feedback, Exploration and learning, Debugging and troubleshooting
+
+# XDG
+
+freedesktop.org (fd.o), formerly ***X Desktop Group*** (XDG), is a project to work on interoperability and shared base technology for free-software desktop environments for the X Window System (X11) and Wayland on Linux and other Unix-like operating systems. Although freedesktop.org produces specifications for interoperability, it is not a formal standards body.

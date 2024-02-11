@@ -19,27 +19,27 @@ So maybe whoever wrote that wanted to redirect stdout to the terminal assuming t
 
 One place where n>&n makes sense is with zsh and its mult_IOs feature. In zsh:
 
-```
+```bash
 some-cmd >&1 > some-file
 # that is: some-cmd 1>&1 1> some-file
 ```
 
 Redirects the standard output of some-cmd to both whatever stdout was before (&1) and some-file, as if you had written:
 
-```
+```bash
 some-cmd | tee some-file
 ```
 
 While
 
-```
+```bash
 some-cmd <&0 < some-file
 # that is: some-cmd 0<&0 0< some-file
 ```
 
 would feed first the original stdin and then some-file as input to some-cmd as if you had written:
 
-```
+```bash
 cat - some-file | some-cmd
 ```
 
@@ -47,7 +47,7 @@ But in cmd `<&0 >&0,` `fd 0` is redirected only once, so that does not apply.
 
 `n>&n` can also have an interesting side effect in some shells (ksh, zsh, not dash, bash nor yash) in that it triggers an error and gives up running the command if the file descriptor n is not open. So, in those shells,
 
-```
+```bash
 cmd 0<&0
 ```
 
@@ -84,3 +84,8 @@ uppercase_letters=ABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 trkey_lower_filename=`echo Test_filename | tolower`
 ```
+
+
+# References:
+
+- [Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/ "An in-depth exploration of the art of shell scripting")
