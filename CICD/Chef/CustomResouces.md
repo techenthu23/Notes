@@ -80,7 +80,50 @@ end
 
 This example demonstrates how you can access and utilize other properties within the `coerce` method to perform dynamic transformations and validations based on your specific requirements. Remember to adapt the code to your specific resource and system context.
 
+Unfortunately, Chef custom resources do not inherently allow you to specify multiple `coerce` methods for a single property. The `coerce` method is designed to be a singular point of transformation for user input on a specific property. However, there are a couple of alternative approaches you can consider to achieve similar functionality:
 
+**1. Chained Coercion:**
+
+* You can leverage Ruby's method chaining capabilities within your existing `coerce` method. This involves applying multiple transformations sequentially using chained method calls. Here's an example:
+
+```ruby
+property :my_property, String, required: true,
+          coerce: proc { |value| value.strip.downcase.gsub(/\s+/, '_') }
+```
+
+In this example, the `coerce` method first removes leading and trailing whitespaces (`strip`), then converts the string to lowercase (`downcase`), and finally replaces all whitespace characters with underscores (`gsub`).
+
+**2. Conditional Transformation:**
+
+* Implement conditional logic within your `coerce` method to apply different transformations based on specific criteria. This allows you to tailor the coercion based on the provided value's characteristics. Here's an example:
+
+```ruby
+property :my_property, String, required: true,
+          coerce: proc do |value|
+            if value.is_a?(Numeric)
+              value.to_s
+            else
+              value.strip
+            end
+          end
+```
+
+This example checks if the value is a numeric data type. If so, it converts it to a string. Otherwise, it simply removes leading and trailing whitespaces.
+
+**3. Custom Validation with Lambda:**
+
+* While not directly related to coercion, you can combine property validation with lambda functions to achieve partial transformation and validation simultaneously. Define a validation lambda that performs certain modifications based on the input value and raise an error if the transformed value doesn't meet specific criteria.
+
+**Considerations:**
+
+* Chained coercion might become less readable for more complex transformations.
+* Conditional logic within coercion adds complexity and requires careful testing.
+* Custom validation lambdas offer flexibility but need to be defined separately.
+
+**Remember:** Carefully choose the approach that best suits your specific needs and maintains code clarity. Always strive for consistency and maintainability when transforming and validating property values within your Chef custom resources.
+
+
+# callbacks
 In Chef custom resources, callbacks serve a distinct purpose from the `coerce` method. While `coerce` focuses on transforming user input into standardized formats, callbacks provide execution hooks at specific points during the resource's lifecycle. They allow you to execute custom logic before, after, or even during certain resource actions.
 
 Here's a breakdown of the key features of callbacks:
@@ -212,3 +255,36 @@ end
 ```
 
 By setting `ignore_failure` to `true`, failures raised within the `action :do_something` block of the custom resource will be ignored, allowing the Chef run to continue.
+
+
+In the context of Chef custom resources and property coercion, both `proc` and `lambda` can be used for similar purposes, but with certain key differences:
+
+**Proc:**
+
+* A `proc` object represents a block of code. It can access variables from the surrounding scope and capture additional arguments when called.
+* When used for coercion, it takes the provided value as input and transforms it to the desired format before returning the transformed value.
+* **Advantages:**
+    * Flexible: Can access context variables and accept additional arguments.
+    * Simple syntax: Defined using a block directly within the property options.
+* **Disadvantages:**
+    * Not strict on argument count: Ignores extra arguments or raises `LocalJumpError` for missing ones.
+    * Returns immediately from the current method: Might not be suitable for complex transformations involving multiple steps.
+
+**Lambda:**
+
+* A `lambda` object also represents a block of code, but it behaves more like a method.
+* It strictly enforces the number of arguments it should receive, raising an `ArgumentError` for any mismatch.
+* When used for coercion, it performs the transformation and returns the result, similar to a regular method call.
+* **Advantages:**
+    * Enforces argument count: Ensures you provide the expected number of arguments.
+    * Returns from the lambda itself: Allows for chained operations or complex logic within the transformation.
+* **Disadvantages:**
+    * Less flexible: Cannot access context variables or accept additional arguments.
+    * Requires separate definition: Defined using `lambda { ... }` block outside the property option.
+
+**Which one to use?**
+
+- If your coercion requires accessing variables from the surrounding scope or needs flexibility with argument handling, use `proc`.
+- If strict argument enforcement and multi-step transformations are necessary, or you want behavior closer to a method, use `lambda`.
+
+Ultimately, the best choice depends on your specific requirements and preferred coding style. Remember to consider the trade-offs of each approach to ensure clean and well-defined property coercion in your Chef custom resources.
