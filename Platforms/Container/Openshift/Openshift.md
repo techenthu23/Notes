@@ -6,6 +6,8 @@ title:  "Openshift"
 # Openshift
 
 - [Openshift](#openshift)
+- [Pods](#pods)
+- [Services](#services)
 - [Application "Self Healing"](#application-self-healing)
 - [Routes](#routes)
 - [Logging](#logging)
@@ -23,13 +25,42 @@ title:  "Openshift"
       - [Catalog](#catalog)
     - [Deploying an Image](#deploying-an-image)
 
+OpenShift is a superset of Kubernetes. Kubernetes concepts, commands, and practices work on OpenShift. You can do any of the usual kubectl operations in the OpenShift API. __The reverse is not true__. 
+
+OpenShift has features and entire workflows that are not part of Kubernetes. For example, 
+- BuildConfig and Build resources in the OpenShift API represent the configuration and iterative executions of a process to build an application. They are not in the Kubernetes API, because Kubernetes doesn’t define a mechanism for compiling software and assembling container images. OpenShift adds these two types of resources and the facilities that use them. 
+- Likewise, while Kubernetes has a namespace to organize resources, OpenShift augments the namespace to form the Project. A Project demarcates access boundaries for clusters occupied by multiple tenants and serves as a discrete unit for administrative policy. Kubernetes establishes the components of a container orchestrator and a way of addressing them. 
+ 
+OpenShift builds on that foundation, adding tools and abstractions for the developers who build the apps that run on the cluster. Keeping those apps running is the reason the cluster exists.
+
+Kubernetes in OpenShift is like the Linux kernel in a Linux distribution
+
+The Kubernetes namespace defines a scope for resource names. A cluster may be divided into any number of namespaces. Within a namespace, the names of resources must be unique. Namespaces partition a cluster among multiple applications, multiple application layers, or multiple users. To enforce access control or any security among those namespaces requires additional pieces and policies. OpenShift’s Project extends the basic namespace with default access controls OpenShift enforces access control to the cluster and its resources. In OpenShift pluggable authentication modules govern authentification for an authorization regime built atop Kubernetes role-based access control (RBAC).
 
 
+RBAC rules define a user and make the user a member of at least one group. Groups
+are used to represent teams or units within a company that might need different lev‐
+els of access to different Projects. Your user and group determine what resources you
+can see and what you can do with them. Projects, then, can be used to divide the clus‐
+ter among multiple teams or multiple applications, enforcing the rules that keep them
+from interfering in other Projects. You can assign roles and the rights they entail to
+individual users, and users inherit roles from their group memberships.
 
+# Pods
+The basic unit of running code in any Kubernetes cluster is the pod. A pod groups
+one or more containers together and guarantees they all run on the same cluster
+node. A pod has a unique IP address within the cluster, shared by all the containers in
+it. Containers in a pod can also share persistent storage volumes and memory, and
+can communicate with one another over the localhost interface.
+Pods are the unit of horizontal scaling. When a deployment is scaled up, new pods are
+created, usually on other cluster nodes. In a deployment’s specification, these are
+called replicas. Each replicated pod has the same set of containers and configuration
+but its own local runtime state.
 
+# Services
 Services provide a convenient abstraction layer inside OpenShift to find a group of similar Pods. They also act as an internal proxy/load balancer between those Pods and anything else that needs to access them from inside the OpenShift environment. For example, if you needed more parksmap instances to handle the load, you could spin up more Pods. OpenShift automatically maps them as endpoints to the Service, and the incoming requests would not notice anything different except that the Service was now doing a better job handling the requests.
 
-When you asked OpenShift to run the image, it automatically created a Service for you. Remember that services are an internal construct. They are not available to the "outside world", or anything that is outside the OpenShift environment. That’s okay, as you will learn later.
+When you asked OpenShift to run the image, it automatically created a Service for you. Remember that services are an internal construct. They are not available to the "outside world", or anything that is outside the OpenShift environment. 
 
 The way that a Service maps to a set of Pods is via a system of Labels and Selectors. Services are assigned a fixed IP address and many ports and protocols can be mapped.
 
@@ -93,6 +124,28 @@ When creating a Route, some other options can be provided, like the hostname and
 ```
 oc create route edge parksmap --service=parksmap 
 ```
+
+A Kubernetes Service is a load-balanced endpoint representing a set of pods. Usually
+there is an application running in those pods providing a service of some kind. A Ser‐
+vice has a DNS name resolving to an IP address within the cluster, so it is uncompli‐
+cated for other application components to connect to it. But that name and IP address
+are meaningless outside of the cluster. The rest of the office, the outside world, and
+the whole internet don’t know anything about them. Something has to connect out‐
+side traffic to the cluster Service living in the cluster’s logical network.
+Kubernetes provides the Ingress resource to define the wiring of outside connections
+to the cluster’s logical network. Ingress is a flexible, configurable representation of a
+network aperture and the rules under which it may be traversed. An Ingress resource
+requires an Ingress controller to satisfy its rules. An Ingress controller is a program
+that knows how to control an external network. There are Ingress controllers for
+reverse proxies, hardware load balancers, routers, and API-driven cloud provider
+networks, for example.
+The OpenShift Route is a simplified way to expose the most common HTTP and
+HTTPS services to networks outside the cluster. Creating a route associated with a
+Service causes OpenShift to configure its included reverse proxy with a DNS name
+and an IP address reachable from an external network. Connections to the route’s
+external IP address are then forwarded to the cluster Service, and from there on to an
+application pod
+
 
 # Logging
 

@@ -41,9 +41,10 @@ Services offload policy decisions to OPA by executing queries. OPA evaluates pol
 
 OPA’s RESTful APIs use JSON over HTTP so you and your users can integrate OPA with any programming language. At a high level, integrating OPA into your service involves:
 
-Deploying OPA alongside your service
-Pushing relevant data about your service’s state into OPA’s document store
-Offloading some or all decision-making to OPA by querying it
+- Deploying OPA alongside your service
+- Pushing relevant data about your service’s state into OPA’s document store
+- Offloading some or all decision-making to OPA by querying it
+
 When your service is integrated with OPA, your users will be able author and deploy custom policies that control the behavior of your service’s policy-enabled features. Furthermore, users can publish data to OPA that is not available to your service about their own deployment context.
 
 1. __Define Policies:__ Write policies in Rego language. These policies express the desired state or conditions.

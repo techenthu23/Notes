@@ -160,3 +160,68 @@ REPL stands for `Read-Eval-Print Loop`. It's a simple yet powerful interactive c
 # XDG
 
 freedesktop.org (fd.o), formerly ***X Desktop Group*** (XDG), is a project to work on interoperability and shared base technology for free-software desktop environments for the X Window System (X11) and Wayland on Linux and other Unix-like operating systems. Although freedesktop.org produces specifications for interoperability, it is not a formal standards body.
+
+
+
+
+**Shadow AI** refers to artificial intelligence systems operating beyond the visibility or control of those responsible for overseeing them. This can occur when AI applications are developed or used without being officially sanctioned or monitored by an organization’s IT department². Essentially, it's the unauthorized use of AI within an organization, which poses risks such as data breaches, compliance issues, and unreliable outputs⁵. If you're dealing with shadow AI, here are some steps you can take to address it:
+
+1. **Decide Access Policies**: Determine how employees can access public generative AI tools. Consider written guidelines, firewalls, or VPNs to control access. Weigh the benefits of productivity and innovation against security risks¹.
+
+2. **Communicate Policies**: Clearly communicate your organization's generative AI policies to employees. Let them know which tools they can use, for what purposes, and with what types of data¹.
+
+Remember, managing shadow AI is crucial for maintaining security and data integrity within your organization. 😊
+
+Source: Conversation with Copilot, 21/6/2024
+(1) What is shadow AI & how to turn a liability into an asset. https://bing.com/search?q=AI+Shadow+Monitoring+-+What+is+it.
+(2) How AI Can Help in Detecting and Managing Shadow Data. https://www.aidatafinder.com/ai-help-detecting-managing-shadow/.
+(3) What Is Shadow AI And What Can IT Do About It? - Forbes. https://www.forbes.com/sites/delltechnologies/2023/10/31/what-is-shadow-ai-and-what-can-it-do-about-it/.
+(4) What is shadow AI & how to turn a liability into an asset. https://www.walkme.com/blog/shadow-ai/.
+(5) What Is Shadow AI? Enterprise IT's Latest Security Threat - Tech.co. https://tech.co/news/what-is-shadow-ai.
+
+
+In the context of antivirus and cybersecurity, ASR stands for **Attack Surface Reduction**. It refers to a set of rules and features designed to minimize the areas through which an attacker can gain access to a system or network. ASR rules are part of Microsoft Defender for Endpoint and help prevent actions that malware often abuses to compromise devices and networks. These rules can block or audit behaviors like the execution of potentially obfuscated scripts, the creation of child processes by certain applications, and access to credential-stealing attacks on the Windows local security authority subsystem (lsass.exe), among others¹.
+
+ASR is a proactive security measure that complements antivirus solutions by reducing the attackable surface area of a system, making it harder for threats to exploit vulnerabilities. It's an important aspect of a robust security posture, especially in enterprise environments.🛡️
+
+Source: Conversation with Copilot, 11/6/2024
+(1) Attack surface reduction rules reference - Microsoft Defender for .... https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-reference.
+(2) Enable attack surface reduction rules - Microsoft Defender for Endpoint. https://learn.microsoft.com/en-us/defender-endpoint/enable-attack-surface-reduction.
+(3) Demystifying attack surface reduction rules - Part 1. https://techcommunity.microsoft.com/t5/microsoft-defender-for-endpoint/demystifying-attack-surface-reduction-rules-part-1/ba-p/1306420.
+(4) How to use Windows Defender Attack Surface Reduction rules. https://www.csoonline.com/article/570103/how-to-use-windows-defender-attack-surface-reduction-rules.html.
+(5) Microsoft Defender Attack Surface Reduction Recommendations - Medium. https://blog.palantir.com/microsoft-defender-attack-surface-reduction-recommendations-a5c7d41c3cf8.
+
+
+SCCM stands for System Center Configuration Manager. It's a systems management software developed by Microsoft that allows IT professionals to manage large groups of computers. SCCM provides capabilities such as remote control, patch management, software distribution, operating system deployment, and hardware and software inventory. It supports the management of Microsoft Windows and Windows Embedded operating systems and integrates with various Microsoft technologies and solutions to help increase IT productivity and efficiency, empower user productivity, and maintain compliance settings¹²³. If you're looking to manage and deploy applications and devices within an organization, SCCM can be a valuable tool. 🖥️🔧
+
+(1) What is Configuration Manager? - Configuration Manager. https://learn.microsoft.com/en-us/mem/configmgr/core/understand/introduction.
+(2) Microsoft Configuration Manager - Wikipedia. https://en.wikipedia.org/wiki/Microsoft_Configuration_Manager.
+(3) Definition of SCCM | PCMag. https://www.pcmag.com/encyclopedia/term/sccm.
+(4) What is the System Center Configuration Manager (SCCM)? - Definition .... https://www.techopedia.com/definition/29529/system-center-configuration-manager-sccm.
+(5) Guide to Microsoft System Center Configuration Manager (SCCM .... https://www.spiceworks.com/tech/networking/articles/system-center-configuration-manager/.
+
+
+Certainly! SCCM (System Center Configuration Manager) and Intune are both Microsoft products used for managing and deploying devices and applications within an organization, but they have different approaches and use cases.
+
+**SCCM**:
+- Is part of Microsoft Endpoint Manager.
+- Is traditionally used for on-premises network environments.
+- Uses an agent-based approach for management, giving administrators deep access to managed devices.
+- Is ideal for complex, heterogeneous environments with a mix of servers, workstations, and laptops.
+- Offers features like software distribution, patch management, operating system deployment, and hardware/software inventory.
+
+**Intune**:
+- Is a cloud-based mobile device management (MDM) and mobile application management (MAM) solution.
+- Is suitable for managing a variety of devices, including mobile devices, laptops, and desktops.
+- Uses a profile-based approach prescribed by the operating system manufacturer.
+- Supports a remote and mobile workforce, allowing management from anywhere.
+- Integrates with other Microsoft tools like Autopilot, Active Directory, and Office 365.
+
+In summary, SCCM is more powerful and suitable for managing a diverse and complex IT environment, typically within larger organizations that have on-premises infrastructure. Intune, on the other hand, is more streamlined and cloud-oriented, ideal for organizations that need flexibility to manage devices remotely and support a mobile workforce¹².
+
+(1) Intune vs SCCM: Comparison of Solutions | NinjaOne. https://www.ninjaone.com/blog/intune-vs-sccm-comparison-microsoft/.
+(2) Microsoft Endpoint Configuration Manager (SCCM) vs Microsoft Intune .... https://blog.teamascend.com/sccm-vs-intune.
+(3) SCCM vs Intune: Choose the Right Tool for the Task. https://bing.com/search?q=difference+between+SCCM+and+Intune.
+(4) SCCM vs Intune: Choose the Right Tool for the Task. https://kollective.com/sccm-vs-intune-choose-the-right-tool-for-the-task/.
+(5) Intune vs SCCM: Which one is better? - Communication Square LLC. https://www.communicationsquare.com/news/intune-vs-system-center-configuration-manager/.
+(6) Microsoft Configuration Manager vs Microsoft Intune comparison - PeerSpot. https://www.peerspot.com/products/comparisons/microsoft-configuration-manager_vs_microsoft-intune.

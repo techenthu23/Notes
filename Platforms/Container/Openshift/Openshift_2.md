@@ -24,6 +24,25 @@ title:  "Openshift"
       - [Catalog](#catalog)
     - [Deploying an Image](#deploying-an-image)
 
+OpenShift is a superset of Kubernetes. Kubernetes concepts, commands, and practi‐
+ces work on OpenShift. You can do any of the usual kubectl operations in the Open‐
+Shift API. The reverse is not true. OpenShift has features and entire workflows that
+are not part of Kubernetes. For example, BuildConfig and Build resources in the
+OpenShift API represent the configuration and iterative executions of a process to
+build an application. They are not in the Kubernetes API, because Kubernetes doesn’t
+define a mechanism for compiling software and assembling container images. Open‐
+Shift adds these two types of resources and the facilities that use them. Likewise,
+while Kubernetes has a namespace to organize resources, OpenShift augments the
+namespace to form the Project. A Project demarcates access boundaries for clusters
+occupied by multiple tenants and serves as a discrete unit for administrative policy.
+Kubernetes establishes the components of a container orchestrator and a way of
+addressing them. OpenShift builds on that foundation, adding tools and abstractions
+for the developers who build the apps that run on the cluster. Keeping those apps
+running is the reason the cluster exists.
+This chapter introduces key concepts for building, deploying, and maintaining appli‐
+cations with OpenShift. It notes where these concepts extend or replace Kubernetes
+abstractions. We’ll begin by explaining how OpenShift Projects extend the basic
+Kubernetes namespace.
 
 
 
