@@ -1,3 +1,7 @@
+- [callbacks](#callbacks)
+- [Chef Priority Map](#chef-priority-map)
+
+
 In Chef custom resources, the `coerce` method serves the purpose of transforming user input into a standardized format. It takes the provided value as input and returns a transformed version of it. This transformed value becomes the actual property value used by the resource.
 
 Here's a breakdown of its key features:
@@ -288,3 +292,31 @@ In the context of Chef custom resources and property coercion, both `proc` and `
 - If strict argument enforcement and multi-step transformations are necessary, or you want behavior closer to a method, use `lambda`.
 
 Ultimately, the best choice depends on your specific requirements and preferred coding style. Remember to consider the trade-offs of each approach to ensure clean and well-defined property coercion in your Chef custom resources.
+
+
+# Chef Priority Map 
+
+Certainly! The `Chef.resource_priority_map` allows you to prioritize custom resources over built-in ones when they share the same name. While we've discussed the `sysctl_param` example, you can use this approach for other resource methods as well. Here are some common methods that can be prioritized:
+
+1. **Custom Resources**:
+   - Prioritize custom resources from your cookbooks (e.g., `MyCookbook::MyCustomResource`) over built-in resources.
+   - Example:
+     ```ruby
+     Chef.resource_priority_map.priority(:my_custom_resource, [MyCookbook::MyCustomResource])
+     ```
+
+2. **Built-in Resources**:
+   - If you want to prioritize a built-in resource over a custom one, you can do the reverse:
+     ```ruby
+     Chef.resource_priority_map.priority(:my_builtin_resource, [Chef::Resource::MyBuiltinResource])
+     ```
+
+3. **Other Resource Methods**:
+   - You can apply this technique to any resource method that might collide.
+   - For instance, if you have a custom `firewall_rule` resource, you can prioritize it:
+     ```ruby
+     Chef.resource_priority_map.priority(:firewall_rule, [MyCookbook::FirewallRuleResource])
+     ```
+
+Remember that this mechanism ensures that the desired resource class responds to the specified resource method. Feel free to adapt it based on your specific use case! 😊👍¹²⁵
+
