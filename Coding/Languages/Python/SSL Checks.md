@@ -1024,3 +1024,403 @@ Source: Conversation with Copilot, 13/6/2024
 (3) Ultimate Python Project Directory Structure Guide For Python Projects .... https://www.codewithc.com/ultimate-python-project-directory-structure-guide-for-python-projects/.
 (4) Structuring Your Project — The Hitchhiker's Guide to Python. https://docs.python-guide.org/writing/structure/.
 (5) Getty Images. https://www.gettyimages.com/detail/news-photo/in-this-photo-illustration-a-python-logo-seen-displayed-on-news-photo/1986209604.
+
+
+
+Here's a Python script that checks if an SSL certificate's serial number matches a given serial number and then verifies if the certificate is expiring within 10 days or has already expired. This script uses the `ssl` and `cryptography` libraries.
+
+### **Step-by-Step Guide**
+
+1. **Install Required Libraries**:
+   Ensure you have the `cryptography` library installed:
+   ```bash
+   pip install cryptography
+   ```
+
+2. **Python Code**:
+   ```python
+   import ssl
+   import socket
+   from datetime import datetime, timedelta
+   from cryptography import x509
+   from cryptography.hazmat.backends import default_backend
+
+   def check_certificate(hostname, port, expected_serial_number):
+       # Create a default SSL context
+       context = ssl.create_default_context()
+
+       # Connect to the server and get the certificate
+       with socket.create_connection((hostname, port)) as sock:
+           with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+               cert_bin = ssock.getpeercert(binary_form=True)
+               cert = x509.load_der_x509_certificate(cert_bin, default_backend())
+
+       # Check the serial number
+       serial_number = cert.serial_number
+       if serial_number != expected_serial_number:
+           print(f"Serial number mismatch: expected {expected_serial_number}, got {serial_number}")
+           return False
+
+       # Check the expiration date
+       not_after = cert.not_valid_after
+       current_time = datetime.utcnow()
+       if not_after < current_time:
+           print("Certificate has already expired.")
+           return False
+       elif not_after < current_time + timedelta(days=10):
+           print("Certificate is expiring within 10 days.")
+           return False
+       else:
+           print("Certificate is valid and not expiring within 10 days.")
+           return True
+
+   # Example usage
+   hostname = 'your_server_name'
+   port = 443
+   expected_serial_number = 123456789  # Replace with the actual serial number
+
+   check_certificate(hostname, port, expected_serial_number)
+   ```
+
+### **Explanation**
+
+1. **Install Required Libraries**:
+   - The `cryptography` library is used to parse and handle the SSL certificate.
+
+2. **Connect to the Server**:
+   - We create an SSL context and connect to the server using `socket.create_connection` and `context.wrap_socket`.
+
+3. **Retrieve and Parse the Certificate**:
+   - The certificate is retrieved in binary form and parsed using `x509.load_der_x509_certificate`.
+
+4. **Check the Serial Number**:
+   - The serial number of the certificate is compared with the expected serial number.
+
+5. **Check the Expiration Date**:
+   - The expiration date (`not_valid_after`) is checked to see if the certificate has already expired or is expiring within 10 days.
+
+### **Benefits**
+
+- **Security**: Ensures that the certificate matches the expected serial number and is not expired or expiring soon.
+- **Automation**: Can be integrated into automated monitoring scripts to regularly check the status of SSL certificates.
+
+This script should help you verify the SSL certificate's serial number and expiration status. If you have any specific requirements or need further assistance, feel free to ask!
+
+Source: Conversation with Copilot, 23/7/2024
+(1) Python: how to get expired SSL cert date? - Stack Overflow. https://stackoverflow.com/questions/71139519/python-how-to-get-expired-ssl-cert-date.
+(2) python - How to fetch the SSL certificate to see whether it's expired .... https://stackoverflow.com/questions/45810069/how-to-fetch-the-ssl-certificate-to-see-whether-its-expired-or-not.
+(3) undefined. http://ocsp.digicert.com.
+(4) undefined. http://cacerts.digicert.com/DigiCertSHA2SecureServerCA.crt.
+(5) undefined. http://crl3.digicert.com/ssca-sha2-g6.crl.
+(6) undefined. http://crl4.digicert.com/ssca-sha2-g6.crl.
+(7) undefined. https://gist.github.com/sharuzzaman/8827ef0d9fff89e4e937579b2b01653f.
+
+
+
+To check multiple SSL certificates concurrently, you can use Python's `asyncio` library along with `aiohttp` for asynchronous network operations. This approach allows you to perform multiple network requests concurrently, improving the efficiency of your application.
+
+### **Step-by-Step Guide**
+
+1. **Install Required Libraries**:
+   Ensure you have `aiohttp` and `cryptography` installed:
+   ```bash
+   pip install aiohttp cryptography
+   ```
+
+2. **Python Code to Check Multiple Certificates Concurrently**:
+   ```python
+   import asyncio
+   import aiohttp
+   import ssl
+   from datetime import datetime, timedelta
+   from cryptography import x509
+   from cryptography.hazmat.backends import default_backend
+
+   async def fetch_certificate(session, hostname, port, expected_serial_number):
+       context = ssl.create_default_context()
+       context.check_hostname = False
+       context.verify_mode = ssl.CERT_NONE
+
+       try:
+           async with session.get(f'https://{hostname}:{port}', ssl=context) as response:
+               cert_bin = response.connection.transport.get_extra_info('ssl_object').getpeercert(binary_form=True)
+               cert = x509.load_der_x509_certificate(cert_bin, default_backend())
+
+               # Check the serial number
+               serial_number = cert.serial_number
+               if serial_number != expected_serial_number:
+                   print(f"{hostname}: Serial number mismatch: expected {expected_serial_number}, got {serial_number}")
+                   return False
+
+               # Check the expiration date
+               not_after = cert.not_valid_after
+               current_time = datetime.utcnow()
+               if not_after < current_time:
+                   print(f"{hostname}: Certificate has already expired.")
+                   return False
+               elif not_after < current_time + timedelta(days=10):
+                   print(f"{hostname}: Certificate is expiring within 10 days.")
+                   return False
+               else:
+                   print(f"{hostname}: Certificate is valid and not expiring within 10 days.")
+                   return True
+       except Exception as e:
+           print(f"{hostname}: Failed to fetch certificate: {e}")
+           return False
+
+   async def main():
+       # List of hostnames, ports, and expected serial numbers
+       certificates = [
+           {'hostname': 'example.com', 'port': 443, 'expected_serial_number': 123456789},
+           {'hostname': 'anotherexample.com', 'port': 443, 'expected_serial_number': 987654321},
+           # Add more certificates as needed
+       ]
+
+       async with aiohttp.ClientSession() as session:
+           tasks = [fetch_certificate(session, cert['hostname'], cert['port'], cert['expected_serial_number']) for cert in certificates]
+           results = await asyncio.gather(*tasks)
+           print("Results:", results)
+
+   if __name__ == "__main__":
+       asyncio.run(main())
+   ```
+
+### **Explanation**
+
+1. **Install Required Libraries**:
+   - `aiohttp`: An asynchronous HTTP client for making network requests.
+   - `cryptography`: Used to parse and handle SSL certificates.
+
+2. **Asynchronous Function to Fetch Certificate**:
+   - The `fetch_certificate` function uses `aiohttp` to make an asynchronous HTTP request to the server.
+   - It retrieves the SSL certificate, checks the serial number, and verifies the expiration date.
+
+3. **Main Function to Manage Concurrent Tasks**:
+   - The `main` function creates a list of tasks for each certificate to be checked.
+   - It uses `asyncio.gather` to run these tasks concurrently.
+
+4. **Running the Asynchronous Tasks**:
+   - The script runs the `main` function using `asyncio.run`.
+
+### **Benefits**
+
+- **Concurrency**: Allows multiple SSL certificates to be checked concurrently, improving efficiency.
+- **Scalability**: Can handle a large number of certificates without blocking the main thread.
+
+This approach ensures that your application can efficiently check multiple SSL certificates concurrently. If you have any specific requirements or need further assistance, feel free to ask!
+
+
+To handle timeouts and retries for certificate checks in Python, you can use the `aiohttp` library along with the `tenacity` library for retry logic. This approach allows you to perform asynchronous network operations with robust error handling.
+
+### **Step-by-Step Guide**
+
+1. **Install Required Libraries**:
+   Ensure you have `aiohttp` and `tenacity` installed:
+   ```bash
+   pip install aiohttp tenacity cryptography
+   ```
+
+2. **Python Code to Handle Timeouts and Retries**:
+   ```python
+   import asyncio
+   import aiohttp
+   import ssl
+   from datetime import datetime, timedelta
+   from cryptography import x509
+   from cryptography.hazmat.backends import default_backend
+   from tenacity import retry, stop_after_attempt, wait_exponential
+
+   @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+   async def fetch_certificate(session, hostname, port, expected_serial_number):
+       context = ssl.create_default_context()
+       context.check_hostname = False
+       context.verify_mode = ssl.CERT_NONE
+
+       try:
+           async with session.get(f'https://{hostname}:{port}', ssl=context, timeout=10) as response:
+               cert_bin = response.connection.transport.get_extra_info('ssl_object').getpeercert(binary_form=True)
+               cert = x509.load_der_x509_certificate(cert_bin, default_backend())
+
+               # Check the serial number
+               serial_number = cert.serial_number
+               if serial_number != expected_serial_number:
+                   print(f"{hostname}: Serial number mismatch: expected {expected_serial_number}, got {serial_number}")
+                   return False
+
+               # Check the expiration date
+               not_after = cert.not_valid_after
+               current_time = datetime.utcnow()
+               if not_after < current_time:
+                   print(f"{hostname}: Certificate has already expired.")
+                   return False
+               elif not_after < current_time + timedelta(days=10):
+                   print(f"{hostname}: Certificate is expiring within 10 days.")
+                   return False
+               else:
+                   print(f"{hostname}: Certificate is valid and not expiring within 10 days.")
+                   return True
+       except Exception as e:
+           print(f"{hostname}: Failed to fetch certificate: {e}")
+           raise
+
+   async def main():
+       # List of hostnames, ports, and expected serial numbers
+       certificates = [
+           {'hostname': 'example.com', 'port': 443, 'expected_serial_number': 123456789},
+           {'hostname': 'anotherexample.com', 'port': 443, 'expected_serial_number': 987654321},
+           # Add more certificates as needed
+       ]
+
+       async with aiohttp.ClientSession() as session:
+           tasks = [fetch_certificate(session, cert['hostname'], cert['port'], cert['expected_serial_number']) for cert in certificates]
+           results = await asyncio.gather(*tasks, return_exceptions=True)
+           print("Results:", results)
+
+   if __name__ == "__main__":
+       asyncio.run(main())
+   ```
+
+### **Explanation**
+
+1. **Install Required Libraries**:
+   - `aiohttp`: An asynchronous HTTP client for making network requests.
+   - `tenacity`: A library for retrying operations with customizable retry logic.
+   - `cryptography`: Used to parse and handle SSL certificates.
+
+2. **Asynchronous Function with Retry Logic**:
+   - The `fetch_certificate` function uses `aiohttp` to make an asynchronous HTTP request to the server.
+   - The `@retry` decorator from `tenacity` is used to retry the function up to 3 times with exponential backoff (starting at 4 seconds and doubling each time, up to a maximum of 10 seconds).
+
+3. **Timeout Handling**:
+   - The `timeout` parameter in `aiohttp` ensures that the request will fail if it takes longer than 10 seconds.
+
+4. **Main Function to Manage Concurrent Tasks**:
+   - The `main` function creates a list of tasks for each certificate to be checked.
+   - It uses `asyncio.gather` to run these tasks concurrently and handle any exceptions that occur.
+
+### **Benefits**
+
+- **Concurrency**: Allows multiple SSL certificates to be checked concurrently, improving efficiency.
+- **Retry Logic**: Automatically retries failed requests with exponential backoff, handling transient errors.
+- **Timeout Handling**: Ensures that requests do not hang indefinitely, improving the robustness of your application.
+
+This approach ensures that your application can efficiently check multiple SSL certificates concurrently while handling timeouts and retries¹²³. If you have any specific requirements or need further assistance, feel free to ask!
+
+Source: Conversation with Copilot, 23/7/2024
+(1) Best Practice: Implementing Retry Logic in HTTP API Clients. https://api4.ai/blog/best-practice-implementing-retry-logic-in-http-api-clients.
+(2) Microservices Aren’t Magic: Handling Timeouts | 8th Light. https://8thlight.com/insights/microservices-arent-magic-handling-timeouts.
+(3) Building Resilient Microservices with Retry and Timeout Strategies .... https://www.momentslog.com/development/architecture/building-resilient-microservices-with-retry-and-timeout-strategies.
+(4) python - How to retry after exception? - Stack Overflow. https://stackoverflow.com/questions/2083987/how-to-retry-after-exception.
+(5) How to implement retry mechanism into Python Requests library?. https://stackoverflow.com/questions/23267409/how-to-implement-retry-mechanism-into-python-requests-library.
+(6) Python - Test requests with retry and timeout - Stack Overflow. https://stackoverflow.com/questions/76706129/python-test-requests-with-retry-and-timeout.
+(7) Troubleshooting Python Request Timeouts | ProxiesAPI. https://proxiesapi.com/articles/troubleshooting-python-request-timeouts.
+(8) Adding timeout while fetching server certs via python. https://stackoverflow.com/questions/26631875/adding-timeout-while-fetching-server-certs-via-python.
+(9) undefined. http://httpstat.us/503.
+(10) undefined. https://api.example.com.
+
+
+You can customize the retry logic using the `tenacity` library by adjusting parameters such as the maximum number of retries, wait times, and other retry behaviors. Here's how you can do it:
+
+### **Step-by-Step Guide**
+
+1. **Install the `tenacity` Library**:
+   Ensure you have `tenacity` installed:
+   ```bash
+   pip install tenacity
+   ```
+
+2. **Customize Retry Logic**:
+   You can customize the retry logic by setting parameters in the `@retry` decorator. Here are some common parameters you can customize:
+
+   - `stop`: Defines when to stop retrying (e.g., after a certain number of attempts).
+   - `wait`: Defines the wait strategy between retries (e.g., exponential backoff).
+   - `retry`: Defines the conditions under which to retry (e.g., specific exceptions).
+
+3. **Example Code**:
+   ```python
+   import asyncio
+   import aiohttp
+   import ssl
+   from datetime import datetime, timedelta
+   from cryptography import x509
+   from cryptography.hazmat.backends import default_backend
+   from tenacity import retry, stop_after_attempt, wait_exponential, wait_fixed, retry_if_exception_type
+
+   # Custom retry logic
+   @retry(
+       stop=stop_after_attempt(5),  # Stop after 5 attempts
+       wait=wait_exponential(multiplier=1, min=2, max=30),  # Exponential backoff with min 2s and max 30s
+       retry=retry_if_exception_type(aiohttp.ClientError)  # Retry on aiohttp.ClientError
+   )
+   async def fetch_certificate(session, hostname, port, expected_serial_number):
+       context = ssl.create_default_context()
+       context.check_hostname = False
+       context.verify_mode = ssl.CERT_NONE
+
+       try:
+           async with session.get(f'https://{hostname}:{port}', ssl=context, timeout=10) as response:
+               cert_bin = response.connection.transport.get_extra_info('ssl_object').getpeercert(binary_form=True)
+               cert = x509.load_der_x509_certificate(cert_bin, default_backend())
+
+               # Check the serial number
+               serial_number = cert.serial_number
+               if serial_number != expected_serial_number:
+                   print(f"{hostname}: Serial number mismatch: expected {expected_serial_number}, got {serial_number}")
+                   return False
+
+               # Check the expiration date
+               not_after = cert.not_valid_after
+               current_time = datetime.utcnow()
+               if not_after < current_time:
+                   print(f"{hostname}: Certificate has already expired.")
+                   return False
+               elif not_after < current_time + timedelta(days=10):
+                   print(f"{hostname}: Certificate is expiring within 10 days.")
+                   return False
+               else:
+                   print(f"{hostname}: Certificate is valid and not expiring within 10 days.")
+                   return True
+       except Exception as e:
+           print(f"{hostname}: Failed to fetch certificate: {e}")
+           raise
+
+   async def main():
+       # List of hostnames, ports, and expected serial numbers
+       certificates = [
+           {'hostname': 'example.com', 'port': 443, 'expected_serial_number': 123456789},
+           {'hostname': 'anotherexample.com', 'port': 443, 'expected_serial_number': 987654321},
+           # Add more certificates as needed
+       ]
+
+       async with aiohttp.ClientSession() as session:
+           tasks = [fetch_certificate(session, cert['hostname'], cert['port'], cert['expected_serial_number']) for cert in certificates]
+           results = await asyncio.gather(*tasks, return_exceptions=True)
+           print("Results:", results)
+
+   if __name__ == "__main__":
+       asyncio.run(main())
+   ```
+
+### **Explanation**
+
+1. **Install `tenacity`**:
+   - The `tenacity` library provides flexible retrying logic.
+
+2. **Customize Retry Logic**:
+   - `stop=stop_after_attempt(5)`: Stops retrying after 5 attempts.
+   - `wait=wait_exponential(multiplier=1, min=2, max=30)`: Uses exponential backoff with a minimum wait time of 2 seconds and a maximum wait time of 30 seconds.
+   - `retry=retry_if_exception_type(aiohttp.ClientError)`: Retries only on `aiohttp.ClientError`.
+
+3. **Asynchronous Function with Custom Retry Logic**:
+   - The `fetch_certificate` function is decorated with the customized `@retry` decorator to handle retries based on the specified logic.
+
+4. **Main Function to Manage Concurrent Tasks**:
+   - The `main` function creates a list of tasks for each certificate to be checked.
+   - It uses `asyncio.gather` to run these tasks concurrently and handle any exceptions that occur.
+
+### **Benefits**
+
+- **Flexibility**: Allows you to customize retry behavior to suit your application's needs.
+- **Robustness**: Ensures that transient errors are handled gracefully with retries.
+
+This approach ensures that your application can efficiently check multiple SSL certificates concurrently while handling timeouts and retries with customized logic. If you have any specific requirements or need further assistance, feel free to ask!
