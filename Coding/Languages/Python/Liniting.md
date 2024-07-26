@@ -236,7 +236,7 @@ my_project/
 
 By configuring your linter settings appropriately, you can ensure that your project adheres to best practices while allowing for necessary exceptions¹²³. If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
+Reference Source:
 1. ESLint ignore specific rule for a specific directory. https://stackoverflow.com/questions/41316551/eslint-ignore-specific-rule-for-a-specific-directory.
 2. How to disable ESLint rules per line, file, or folder. https://byby.dev/eslint-disable-rules.
 3. How to set Eslint to ignore specific files or cases - JS Duck. https://js-duck.com/how-to-set-eslint-to-ignore-specific-files-or-cases/.
@@ -355,7 +355,7 @@ my_project/
 
 By configuring your linter settings appropriately, you can ensure that your project adheres to best practices while allowing for necessary exceptions⁴⁵⁹. If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
+Reference Source:
 1. ESLint ignore specific rule for a specific directory. https://stackoverflow.com/questions/41316551/eslint-ignore-specific-rule-for-a-specific-directory.
 2. How to disable ESLint rules per line, file, or folder. https://byby.dev/eslint-disable-rules.
 3. How to Disable ESLint Rules for a Folder? - Designcise. https://www.designcise.com/web/tutorial/how-to-disable-eslint-rules-for-a-folder.
@@ -366,7 +366,7 @@ Source: Conversation with Copilot, 23/7/2024
 8. Turning off eslint rule for a specific file - Stack Overflow. https://stackoverflow.com/questions/34764287/turning-off-eslint-rule-for-a-specific-file.
 9. Mastering ESLint: How to Disable Rules for Specific Files. https://medium.com/@karimdhrif4444/mastering-eslint-how-to-disable-rules-for-specific-files-06b976af6ee1.
 
-Certainly! Setting up pre-commit hooks for linting and formatting checks in a multi-subdirectory project ensures that your code adheres to coding standards before it gets committed. Here's how you can do it using the `pre-commit` framework.
+# Setting up pre-commit hooks for linting and formatting checks in a multi-subdirectory project ensures that your code adheres to coding standards before it gets committed. Here's how you can do it using the `pre-commit` framework.
 
 ### **Step-by-Step Guide**
 
@@ -518,7 +518,7 @@ my_project/
 
 By following these steps, you can ensure that your project maintains high code quality and adheres to best practices¹²³. If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
+Reference Source:
 1. pre-commit hooks, in general - Stack Overflow. https://stackoverflow.com/collectives/articles/71270196/how-to-use-pre-commit-to-automatically-correct-commits-and-merge-requests-with-g.
 2. Linting, Formatting, and Type Checking Commits in an Nx Monorepo with .... https://www.thisdot.co/blog/linting-formatting-and-type-checking-commits-in-an-nx-monorepo-with-husky.
 3. How to Set Up a Pre-commit Hook with Prettier and ESLint Using ... - Medium. https://bing.com/search?q=set+up+pre-commit+hooks+for+linting+and+formatting+checks+in+a+multi-subdirectory+project.
@@ -536,7 +536,7 @@ Source: Conversation with Copilot, 23/7/2024
 15. How to set Eslint to ignore specific files or cases - JS Duck. https://js-duck.com/how-to-set-eslint-to-ignore-specific-files-or-cases/.
 
 
-Certainly! Setting up continuous integration (CI) with pre-commit checks ensures that your code is automatically linted and formatted before it gets committed and merged. Here's a step-by-step guide to set up CI with pre-commit checks using GitHub Actions.
+# Setting up continuous integration (CI) with pre-commit checks ensures that your code is automatically linted and formatted before it gets committed and merged. Here's a step-by-step guide to set up CI with pre-commit checks using GitHub Actions.
 
 ### **Step-by-Step Guide**
 
@@ -700,7 +700,7 @@ git push
 
 By following these steps, you can ensure that your project maintains high code quality and adheres to best practices²⁴⁵. If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
+Reference Source:
 1. pre-commit. https://pre-commit.com/.
 2. Automatically format and lint code with pre-commit | Interrupt. https://interrupt.memfault.com/blog/pre-commit.
 3. How to use pre-commit to automatically correct commits and merge .... https://stackoverflow.com/collectives/articles/71270196/how-to-use-pre-commit-to-automatically-correct-commits-and-merge-requests-with-g.
@@ -826,7 +826,7 @@ git push
 
 By following these steps, you can set up code coverage checks in your CI workflow and maintain high code quality¹². If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
+Reference Source:
 1. Code coverage | GitLab. https://docs.gitlab.com/ee/ci/testing/code_coverage.html.
 2. Adding test coverage to your continuous integration pipeline. https://circleci.com/blog/adding-test-coverage-to-your-ci-pipeline/.
 3. undefined. https://github.com/CIRCLECI-GWP/ruby-coveralls-project.git.
@@ -924,8 +924,66 @@ line-length = 120
 
 By customizing and ignoring certain linting rules, you can ensure that your project adheres to best practices while accommodating the unique requirements of your codebase¹²³. If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
+Reference Source:
 1. Enhancing Python Code Quality: A Comprehensive Guide to Linting with .... https://dev.to/ken_mwaura1/enhancing-python-code-quality-a-comprehensive-guide-to-linting-with-ruff-3d6g.
 2. python - How do I disable a Pylint warning? - Stack Overflow. https://stackoverflow.com/questions/4341746/how-do-i-disable-a-pylint-warning.
 3. python - pylint: configuration to disable certain warnings - Stack Overflow. https://stackoverflow.com/questions/43948647/pylint-configuration-to-disable-certain-warnings.
 4. python - Is it possible to set lint custom settings and ignores for .... https://stackoverflow.com/questions/64649795/is-it-possible-to-set-lint-custom-settings-and-ignores-for-pylance.
+
+Linting and auto-fixing in Python can help you maintain clean, readable, and error-free code. Here are some tools and methods you can use:
+
+### **Linting Tools**
+1. **Pylint**: A comprehensive tool that checks for errors in Python code, enforces a coding standard, and looks for code smells.
+2. **Flake8**: Combines PyFlakes, pycodestyle, and Ned Batchelder’s McCabe script to check the style and quality of Python code.
+3. **Ruff**: A fast Python linter that can also fix some issues automatically⁵.
+
+### **Auto-Fixing Tools**
+1. **Black**: An uncompromising code formatter that reformats entire files in place. It ensures that your code adheres to PEP 8.
+2. **autopep8**: Automatically formats Python code to conform to the PEP 8 style guide.
+3. **YAPF**: Yet Another Python Formatter, which reformats Python code to the best formatting that conforms to the style guide².
+
+### **Setting Up Auto-Fix**
+To set up auto-fixing, you can use tools like **Black** or **autopep8**. Here's a quick guide on how to use them:
+
+#### **Using Black**
+1. **Install Black**:
+   ```bash
+   pip install black
+   ```
+2. **Format your code**:
+   ```bash
+   black your_script.py
+   ```
+
+#### **Using autopep8**
+1. **Install autopep8**:
+   ```bash
+   pip install autopep8
+   ```
+2. **Auto-fix your code**:
+   ```bash
+   autopep8 --in-place --aggressive --aggressive your_script.py
+   ```
+
+### **Integrating with IDEs**
+Most modern IDEs like Visual Studio Code support these tools and can be configured to run them automatically on save. For example, in VS Code, you can set up **Black** or **autopep8** as the default formatter and enable linting with **Pylint** or **Flake8**¹.
+
+Would you like more detailed steps on setting this up in a specific IDE or any other tool?
+
+Reference Source:
+1. python - How do I automatically fix lint issues reported by pylint .... https://stackoverflow.com/questions/54586757/how-do-i-automatically-fix-lint-issues-reported-by-pylint.
+2. How to make pylint, flake8 or pycodestyle to automatically correct .... https://stackoverflow.com/questions/54836680/how-to-make-pylint-flake8-or-pycodestyle-to-automatically-correct-errors.
+3. Linting Python in Visual Studio Code. https://code.visualstudio.com/docs/python/linting.
+4. Finding and Auto-fixing Lint Errors with GitHub Actions. https://bing.com/search?q=Python+linting+and+auto+fix.
+5. Finding and Auto-fixing Lint Errors with GitHub Actions. https://samuelmeuli.com/blog/2020-02-27-finding-and-auto-fixing-lint-errors-with-github-actions/.
+6. Automate Python Linting and Code Style Enforcement with Ruff and GitHub .... https://dev.to/ken_mwaura1/automate-python-linting-and-code-style-enforcement-with-ruff-and-github-actions-2kk1.
+7. undefined. https://marketplace.visualstudio.com/items?itemName=ms-python.pylint.
+8. undefined. https://marketplace.visualstudio.com/items?itemName=ms-python.flake8.
+9. undefined. https://marketplace.visualstudio.com/items?itemName=ms-python.mypy-type-checker.
+10. undefined. https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff.
+11. undefined. https://marketplace.visualstudio.com/items?itemName=matangover.mypy.
+12. undefined. https://pypi.org/project/black/.
+13. undefined. https://pypi.org/project/autopep8/.
+14. undefined. https://pypi.org/project/yapf/.
+15. undefined. https://medium.com/3yourmind/auto-formatters-for-python-8925065f9505.
+16. undefined. https://pypi.org/project/autoflake8/.

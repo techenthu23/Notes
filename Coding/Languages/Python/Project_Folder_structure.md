@@ -125,12 +125,12 @@ python create_project_structure.py
 
 This will generate a well-organized project directory skeleton based on best practices¹²³. If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
-(1) Structuring Your Project — The Hitchhiker's Guide to Python. https://docs.python-guide.org/writing/structure/.
-(2) Projects Folder Structures Best Practices - DEV Community. https://dev.to/mattqafouri/projects-folder-structures-best-practices-g9d.
-(3) 10 Project Folder Structure Best Practices - CLIMB. https://climbtheladder.com/10-project-folder-structure-best-practices/.
-(4) 10 Software Project Folder Structure Best Practices - CLIMB. https://climbtheladder.com/10-software-project-folder-structure-best-practices/.
-(5) Project Folder Structure Best Practices - Top 10. https://megainterview.com/project-folder-structure-best-practices/.
+Reference Source: 23/7/2024
+1. Structuring Your Project — The Hitchhiker's Guide to Python. https://docs.python-guide.org/writing/structure/.
+2. Projects Folder Structures Best Practices - DEV Community. https://dev.to/mattqafouri/projects-folder-structures-best-practices-g9d.
+3. 10 Project Folder Structure Best Practices - CLIMB. https://climbtheladder.com/10-project-folder-structure-best-practices/.
+4. 10 Software Project Folder Structure Best Practices - CLIMB. https://climbtheladder.com/10-software-project-folder-structure-best-practices/.
+5. Project Folder Structure Best Practices - Top 10. https://megainterview.com/project-folder-structure-best-practices/.
 
 
 
@@ -209,14 +209,14 @@ my_project/
 
 Using PyScaffold can save you time and ensure that your project follows best practices from the start²⁶. If you have any specific requirements or need further assistance, feel free to ask!
 
-Source: Conversation with Copilot, 23/7/2024
-(1) Python project template generator with batteries included - GitHub. https://github.com/pyscaffold/pyscaffold.
-(2) pyscaffold | Python project template generator with batteries .... https://kandi.openweaver.com/python/pyscaffold/pyscaffold.
-(3) Building conda packages with conda skeleton. https://conda.io/projects/conda-build/en/latest/user-guide/tutorials/build-pkgs-skeleton.html.
-(4) conda skeleton — conda-build 3.21.7+0.gb98d7ec0.dirty documentation. https://docs.conda.io/projects/conda-build/en/3.21.x/resources/commands/conda-skeleton.html.
-(5) python - Conda skeleton from pyproject.toml - Stack Overflow. https://stackoverflow.com/questions/74326883/conda-skeleton-from-pyproject-toml.
-(6) GitHub - kraemahz/snek: Python project template generator with .... https://github.com/kraemahz/snek.
-(7) PyScaffold · GitHub. https://github.com/pyscaffold.
+Reference Source: 23/7/2024
+1. Python project template generator with batteries included - GitHub. https://github.com/pyscaffold/pyscaffold.
+2. pyscaffold | Python project template generator with batteries .... https://kandi.openweaver.com/python/pyscaffold/pyscaffold.
+3. Building conda packages with conda skeleton. https://conda.io/projects/conda-build/en/latest/user-guide/tutorials/build-pkgs-skeleton.html.
+4. conda skeleton — conda-build 3.21.7+0.gb98d7ec0.dirty documentation. https://docs.conda.io/projects/conda-build/en/3.21.x/resources/commands/conda-skeleton.html.
+5. python - Conda skeleton from pyproject.toml - Stack Overflow. https://stackoverflow.com/questions/74326883/conda-skeleton-from-pyproject-toml.
+6. GitHub - kraemahz/snek: Python project template generator with .... https://github.com/kraemahz/snek.
+7. PyScaffold · GitHub. https://github.com/pyscaffold.
 
 
 # Directory Structure for Python project

@@ -13,6 +13,7 @@ title:  "OSTree"
   - [Layered Packages](#layered-packages)
   - [Debugging and Rollback](#debugging-and-rollback)
 - [Searching Packages](#searching-packages)
+- [OSTree](#ostree)
 
 # OSTree Overview - Introduction
 
@@ -249,3 +250,19 @@ EOF
 ```
 
 If the default container doesn’t exist, toolbox creates it. Note that the alias for sudo has a space at the end. This tells bash to also check the next command word for alias expansion, which is what makes sudo work with aliases. Thus, we can make sure that both dnf and sudo dnf will work. The first part of the dnf alias is used to skip the sudo command so the rest is run as the regular user, which makes them both work the same.
+
+
+# OSTree
+
+In the OSTree model, operating systems no longer reside in the traditional root directory (“/”). Instead, they parallel install to the new top-level /ostree directory. Each installed system gets its own /ostree/deploy/ stateroot directory (formerly known as “osname”)1.
+
+Unfortunately, there isn’t a direct way to revert to the very first layer (initial installation) in OSTree. The system maintains a history of deployments, but it doesn’t allow you to roll back to the absolute beginning.
+
+However, you can choose a specific deployment (layer) from the history to boot into.
+
+`rpm-ostree uninstall --all` command will remove all additional packages layered on top of your base image. It won’t revert to the initial installation (first layer). Instead, it will create a new versioned image without the specified packages.
+Other layers (deployments) will remain intact, and you’ll switch to the new image upon reboot.
+
+In OSTree, the concept of “squeezing” or compacting layers isn’t directly supported. However, you can achieve similar results by removing individual layered packages or rolling back to a previous version
+
+Remember that OSTree ensures atomic updates, so any changes will require a system reboot to activate the new image

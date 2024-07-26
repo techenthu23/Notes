@@ -905,7 +905,7 @@ if __name__ == "__main__":
         print("Invalid JSON input. Please provide a valid URL in the 'url' field.")
 ```
 
-Replace the example usage with your specific requirements. This script will prompt you to enter a URL in either Python or JSON format, extract the URL, and check its SSL certificate. Adjust the `days_threshold` as needed for your notification criteria. 😊¹²³⁴
+Replace the example usage with your specific requirements. This script will prompt you to enter a URL in either Python or JSON format, extract the URL, and check its SSL certificate. Adjust the `days_threshold` as needed for your notification criteria. 
 
 Reference Source:
 
