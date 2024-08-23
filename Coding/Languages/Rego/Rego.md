@@ -1,6 +1,0 @@
-
-What is Rego? 
-
-Rego is the purpose-built declarative policy language that supports Open Policy Agent (OPA). It’s used to write policy that is easy to read and easy to write. Fundamentally, Rego inspects and transforms data in structured documents, allowing OPA to make policy decisions. Rego was originally inspired by Datalog, a common query language with a decades-long history, but extends its capabilities to support structured document models like JSON. 
-
-Rego queries, put simply, ask questions of data stored in OPA. Rego policies then evaluate whether data complies with, or violates, the expected state of a system — that is how policy decisions are returned. For instance, a policy in Rego might declare, “Containers may never run in privileged mode.” If a request comes to OPA to run a container in privileged mode, that request is denied. Another policy, this time related to application entitlements, might say, “Only users in the Development group who control more than $500K in budget are allowed to access Service A.” If Alice, who is in the Dev group and controls more than $1M in budget, requests access to service A, that request is allowed. This is the simple power of policy as code expressed with Rego.  

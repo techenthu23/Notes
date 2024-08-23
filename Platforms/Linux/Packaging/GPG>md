@@ -1,0 +1,138 @@
+
+RPM package signatures can be used to implement cryptographic integrity checks for RPM packages. This approach is end-to-end in the sense that the package build infrastructure at the vendor can use an offline or half-online private key (such as one stored in hardware security module), and the final system which consumes these packages can directly verify the signatures because they are built into the .rpm package files. Intermediates such as proxies and caches (which are sometimes used to separate production servers from the Internet) cannot tamper with these signatures.
+
+
+GPG stands for GNU Privacy Guard, or GnuPG, a free software package used for ensuring the authenticity of distributed files. For example, a private key (secret key) locks the package while the public key unlocks and verifies the package. If the public key distributed by Fedora does not match the private key during RPM verification, the package may have been altered and therefore cannot be trusted. 
+
+# Signing rpms with GPG
+
+The following steps describes the process of generating a GPG key and signing RPMs with the key.
+
+1. First generate a gpg key pair on the machine.
+
+```sh
+[root@localhost ~]# gpg --gen-key   
+GnuPG needs to construct a user ID to identify your key.
+...
+Real name: Package Manager
+Email address: pmanager@example.com
+Comment: RPM Signing Key
+You selected this USER-ID:
+    "Package Manager (RPM Signing Key) <pmanager@example.com>"
+...
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   2  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 2u
+pub   2048R/B74246CE 2017-03-22
+      Key fingerprint = BCE7 1F72 7D86 E857 2B3F  1790 7255 CF3E B742 46CE
+uid                  Package Manager (RPM Signing Key) <pmanager@example.com>
+sub   2048R/D8FA7BFF 2017-03-22
+```
+
+2. Confirm and see the generated key.
+
+```sh
+[root@localhost ~]# gpg --list-keys
+/root/.gnupg/pubring.gpg
+------------------------
+pub   2048R/B74246CE 2017-03-22
+uid                  Package Manager (RPM Signing Key) <pmanager@example.com>
+sub   2048R/D8FA7BFF 2017-03-22
+```
+
+3. Export the Public key.
+
+```sh
+[root@localhost ~]# gpg --export -a 'Package Manager' > RPM-GPG-KEY-pmanager
+[root@localhost ~]# cat RPM-GPG-KEY-pmanager
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+mQENBFjSgckBCADob86RSLTExhr8T/P69vz4MjE2EDHUmCN+tFYUaDgmkpZBpU40
+Qs6WdOuBUvXevPQfKCj1OaRTouzGGGsvv7W/hHIKZ1IdY5HOXHbHZdkcghnaAGTj
+...
+voKkk10tyrv3xf+PimsnQmV3GKgfMoRLVTP0pP2YN8SS+aSGNPDwfKWKNkNRNc3/
+ZVDQUeETOh4=
+=aTMv
+-----END PGP PUBLIC KEY BLOCK-----
+
+```
+
+4. Import the exported public key into rpm database as follows.
+
+```sh
+[root@localhost ~]# rpm --import RPM-GPG-KEY-pmanager
+
+[root@localhost ~]# rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'
+        gpg-pubkey-fd431d51-4ae0493b --> gpg(Red Hat, Inc. (release key 2) <security@redhat.com>)
+        gpg-pubkey-2fa658e0-45700c69 --> gpg(Red Hat, Inc. (auxiliary key) <security@redhat.com>)
+        gpg-pubkey-b74246ce-58d281c9 --> gpg(Package Manager (RPM Signing Key) <pmanager@example.com>)
+```
+
+```sh
+rpm -qa --qf '%{NAME}-%{VERSION}-%{RELEASE} %{SIGPGP:pgpsig} %{SIGGPG:pgpsig}\n'
+```
+
+5. Edit the file `~/.rpmmacros` in order to utilize the key.
+
+```sh
+[root@localhost ~]# vi .rpmmacros
+[root@localhost ~]# cat .rpmmacros
+%_signature gpg
+%_gpg_path /root/.gnupg
+%_gpg_name Package Manager
+%_gpgbin /usr/bin/gpg2
+```
+
+6. Verify that the `__gpg_sign_cmd` is defined in `--showrc` option. Its not required to define this parameter in the `~/.rpmmacros` above since its already defined in default macros unless there is a requirement to tweak the options for gpg signing command.
+
+```sh
+[root@localhost ~]# rpm --showrc | grep __gpg_sign_cmd -A 5
+-13: __gpg_sign_cmd %{__gpg}
+    gpg --no-verbose --no-armor
+    %{?_gpg_digest_algo:--digest-algo %{_gpg_digest_algo}}
+    --no-secmem-warning
+    %{?_gpg_sign_cmd_extra_args:%{_gpg_sign_cmd_extra_args}}
+    -u "%{_gpg_name}" -sbo %{__signature_filename} %{__plaintext_filename}
+```
+
+7. Sign the rpm.
+
+```sh
+[root@localhost ~]# rpm --addsign test-1-0.x86_64.rpm
+Enter pass phrase:
+Pass phrase is good.
+test-1-0.x86_64.rpm:
+gpg: writing to `/var/tmp/rpm-tmp.JO74Hd.sig'
+gpg: RSA/SHA256 signature from: "B74246CE Package Manager (RPM Signing Key) <pmanager@example.com>"
+gpg: writing to `/var/tmp/rpm-tmp.hG5gUG.sig'
+gpg: RSA/SHA256 signature from: "B74246CE Package Manager (RPM Signing Key) <pmanager@example.com>"
+
+[root@localhost ~]# rpm --checksig test-1-0.x86_64.rpm
+test-1-0.x86_64.rpm: rsa sha1 (md5) pgp md5 OK
+
+[root@localhost ~]# rpm -qp --qf '%|DSAHEADER?{%{DSAHEADER:pgpsig}}:{%|RSAHEADER?{%{RSAHEADER:pgpsig}}:{(none)}|}|\n' test-1-0.x86_64.rpm
+RSA/SHA256, Wed 22 Mar 2017 07:57:29 AM MDT, Key ID 7255cf3eb74246ce
+```
+
+8. `rpm -K` still shows generic output because SHA1 (and MD5) digests are an integral part of rpm packages,
+
+
+The `pinentry` program is referenced by the `gpg` default configuration, but requires manual installation as it is not necessary for the majority of user operations or is otherwise inaccessible at the time.
+
+To verify the gpg pinentry configuration indicates the default `/usr/bin/pinentry` path
+
+```sh
+# grep "pinentry-program" $(gpgconf --list-dirs homedir)/gpg-agent.conf
+```
+Expected Output - None or:
+
+```sh
+# grep "pinentry-program" $(gpgconf --list-dirs homedir)/gpg-agent.conf
+pinentry-program /usr/bin/pinentry
+```
+
+To remove the configuration option entirely
+```sh
+# sed -i '/^pinentry-program/d' $(gpgconf --list-dirs homedir)/gpg-agent.conf
+```

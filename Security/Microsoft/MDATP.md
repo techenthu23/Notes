@@ -1,0 +1,1 @@
+https://blog.sonnes.cloud/lets-create-a-free-lab-with-microsoft-defender-for-endpoint-and-simulate-some-ransomware-attacks-get-the-correct-free-trial/  

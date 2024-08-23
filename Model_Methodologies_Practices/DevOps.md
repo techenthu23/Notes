@@ -23,6 +23,7 @@ title:  "DevOps"
   - [Why DevOps for Data and Testing?](#why-devops-for-data-and-testing)
   - [The Continuous Testing Process](#the-continuous-testing-process)
   - [QuerySurge DevOps for Data Use Cases](#querysurge-devops-for-data-use-cases)
+- [Additional Information / Further Reading](#additional-information--further-reading)
 
 # DevOps
 
@@ -252,3 +253,8 @@ Use Case Example #1
 QuerySurge tests are automatically initiated after ETL execution completes and conditional logic is applied based on specific results of those executions.
 
 ![](./pictures/dataops-use-case-example-1.jpg)
+
+
+# Additional Information / Further Reading
+
+- [DevOps Roadmap]{https://roadmap.sh/devops} 

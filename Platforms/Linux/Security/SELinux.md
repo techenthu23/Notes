@@ -18,14 +18,6 @@
   - [Port numbers](#port-numbers)
   - [Corner cases, evolving or broken applications, and compromised systems](#corner-cases-evolving-or-broken-applications-and-compromised-systems)
   - [Fix SELinux denials by allowing requested access](#fix-selinux-denials-by-allowing-requested-access)
-- [Improving Security](#improving-security)
-- [Cheat Sheet](#cheat-sheet)
-  - [Permissive domains](#permissive-domains)
-  - [File labels](#file-labels)
-    - [Make temporary changes by using chcon](#make-temporary-changes-by-using-chcon)
-    - [Checking Default Context](#checking-default-context)
-  - [Network port labels](#network-port-labels)
-  - [Information Gathering Tools](#information-gathering-tools)
 - [SELinux settings with booleans](#selinux-settings-with-booleans)
 
 # SELinux
@@ -383,7 +375,7 @@ Procedure
 
     ```
     # journalctl -t setroubleshoot
-    # grep sealert /var/log/messages
+    #   
     # sealert -l 87fea572-9f35-47cc-8c81-eb9e9ae8cad0 
     # sealert -a /var/log/audit/audit.log | less -S
     ```
@@ -585,8 +577,8 @@ The Solution Engine on the Red Hat Customer Portal can also provide guidance in 
 
 This should be a last resort ... done sparingly & with care. The vast majority of problems can be solved by setting proper file labels or tweaking booleans or figuring out that the application/admin is doing something wrong.
 
-```
-ausearch -i -m avc | grep xxxx | audit2allow
+    ```
+    ausearch -i -m avc | grep xxxx | audit2allow
 ```
 
 # Improving Security
