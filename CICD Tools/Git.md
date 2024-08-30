@@ -257,7 +257,7 @@ GIT_ASKPASS=$(mktemp) && chmod a+rx $GIT_ASKPASS && export GIT_ASKPASS
 cat > $GIT_ASKPASS <<< '#!/bin/bash
 case "$1" in
     Username*) exec echo "$USERNAME" ;;
-    Password*) exec echo "$PSW" ;;
+    Password*) exec echo "$PSW" ;;          
 esac
 .
 ```
@@ -266,6 +266,37 @@ esac
 3) Otherwise, if the **SSH_ASKPASS** environment variable is set, its value is used as above.
 4) Otherwise, the user is prompted on the terminal.
 
+
+To set the SELinux context for the `GIT_ASKPASS` file, you can use the `chcon` command. Here’s a step-by-step guide:
+
+1. **Identify the current SELinux context**:
+   ```bash
+   ls -Z /path/to/git-askpass
+   ```
+
+2. **Change the SELinux context**:
+   ```bash
+   sudo chcon -t bin_t /path/to/git-askpass
+   ```
+The `bin_t` type is just an example; you might need a different type depending on your system's policy.
+
+3. **Make the change persistent**:
+   ```bash
+   sudo semanage fcontext -a -t bin_t /path/to/git-askpass
+   sudo restorecon -v /path/to/git-askpass
+   ```
+
+These commands ensure that the SELinux context is correctly set and persists across reboots¹².
+
+If you need more specific guidance based on your system's configuration, feel free to ask!
+
+¹: [Red Hat Documentation](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-selinux_contexts_labeling_files)
+²: [WhiteWinterWolf SELinux Cheatsheet](https://www.whitewinterwolf.com/posts/2017/09/08/selinux-cheatsheet/)
+
+Source: Conversation with Copilot, 30/8/2024
+(1) 4.7. SELinux Contexts – Labeling Files | Red Hat Product Documentation. https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-working_with_selinux-selinux_contexts_labeling_files.
+(2) SELinux cheatsheet - WhiteWinterWolf.com. https://www.whitewinterwolf.com/posts/2017/09/08/selinux-cheatsheet/.
+(3) Git Askpass for Windows | Git-Credential-Manager-for-Windows. https://microsoft.github.io/Git-Credential-Manager-for-Windows/Docs/Askpass.html.
 # Git Internals - Environment Variables
 
 Committing
