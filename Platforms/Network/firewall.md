@@ -14,6 +14,17 @@ draft: false
 
 # Firewall
 
+Firewalls act as a barrier between your internal network and external networks (like the internet). They filter incoming and outgoing traffic based on pre-established security rules to block malicious traffic and allow legitimate communications.
+
+### How Firewalls Work:
+1. **Packet Filtering**: Inspects incoming and outgoing packets and permits or blocks them based on criteria like IP addresses, ports, or protocols.
+2. **Stateful Inspection**: Monitors the state of active connections and makes decisions based on the context of the traffic (e.g., traffic from an established connection might be allowed while others are blocked).
+3. **Proxy Service**: Acts as an intermediary between users and the resources they access, filtering requests and responses.
+4. **Next-Gen Firewalls (NGFW)**: Combine traditional firewall technology with additional features like intrusion prevention, encrypted traffic inspection, and threat intelligence.
+
+Essentially, a firewall helps protect your network by filtering traffic, preventing unauthorized access, and stopping potential attacks before they reach your internal network. Need more details on a specific type of firewall?
+
+
 A firewall generally works at layer 3 and 4 of the OSI model. Layer 3 is the Network Layer where IP works and Layer 4 is the Transport Layer, where TCP and UDP function. Many firewalls today have advanced up the OSI layers and can even understand Layer 7 – the Application Layer.
 
 Firewall types can be divided into several different categories based on their general structure and method of operation. Here are eight types of firewalls:
