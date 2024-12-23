@@ -361,3 +361,140 @@ docker run -d --rm -p 8000:80 -p 8443:443 --name pandorafms pandorafms/pandorafm
 To do input/output with a detached container use network connections or shared volumes. These are required because the container is no longer listening to the command line where docker run was run.
 
 To reattach to a detached container, use `docker attach` command.
+
+
+In Linux, Docker containers can communicate over a variety of networking modes. Docker provides multiple network drivers to manage container networking. Below is an overview of the networking options available for Docker containers on Linux:
+
+
+---
+
+1. Network Drivers in Docker
+
+a. Bridge (Default)
+
+Description: Containers are connected to a private bridge network. This is the default network mode if you do not specify any other network.
+
+Use Case: Suitable for containers running on the same host that need to communicate.
+
+Example:
+
+docker network ls  # View networks
+docker network create my-bridge-net  # Create a custom bridge network
+docker run --network=my-bridge-net --name=container1 nginx
+
+
+b. Host
+
+Description: The container shares the host’s network stack, eliminating network isolation.
+
+Use Case: Best for performance-sensitive applications or if the container needs to bind to the same ports as the host.
+
+Example:
+
+docker run --network=host nginx
+
+
+c. None
+
+Description: The container has no network access.
+
+Use Case: Used for containers that do not need to communicate over a network.
+
+Example:
+
+docker run --network=none nginx
+
+
+d. Overlay
+
+Description: Enables networking across multiple Docker hosts using Swarm or Kubernetes.
+
+Use Case: Ideal for distributed applications that need to communicate across nodes.
+
+Example:
+
+docker network create -d overlay my-overlay-net
+docker service create --network=my-overlay-net nginx
+
+
+e. Macvlan
+
+Description: Assigns a MAC address to the container, allowing it to appear as a physical device on the network.
+
+Use Case: Suitable for scenarios where containers need to be directly accessible on the local network.
+
+Example:
+
+docker network create -d macvlan \
+    --subnet=192.168.1.0/24 \
+    --gateway=192.168.1.1 \
+    -o parent=eth0 my-macvlan-net
+docker run --network=my-macvlan-net nginx
+
+
+f. Custom Plugins
+
+Description: Third-party network plugins can be used for specific needs (e.g., Calico, Flannel).
+
+Use Case: Advanced setups in enterprise environments.
+
+
+
+---
+
+2. Inspecting and Managing Networks
+
+List All Networks:
+
+docker network ls
+
+Inspect a Network:
+
+docker network inspect <network-name>
+
+Remove a Network:
+
+docker network rm <network-name>
+
+
+
+---
+
+3. Network Configuration Files
+
+Docker networks are managed at runtime, but you can also configure advanced settings by interacting with Linux networking tools like iptables, ip commands, or /etc/docker/daemon.json.
+
+To persist custom configurations, edit /etc/docker/daemon.json:
+
+{
+    "bip": "192.168.1.1/24",
+    "default-address-pools": [
+        {"base": "192.168.0.0/16", "size": 24}
+    ]
+}
+
+Restart Docker for changes to take effect:
+
+sudo systemctl restart docker
+
+
+
+---
+
+4. Debugging and Troubleshooting
+
+Check Container Connectivity:
+
+docker exec -it <container-name> ping <target-ip-or-hostname>
+
+View Active Connections:
+
+docker network inspect <network-name>
+
+Check Firewall Rules (iptables):
+
+sudo iptables -L -n -v
+
+
+This setup ensures flexible container networking based on your application’s requirements.
+
