@@ -566,3 +566,26 @@ In the realm of computer networking, promiscuous mode refers to the special mode
 
 In a wider sense, promiscuous mode also refers to network visibility from a single observation point, which doesn't necessarily have to be ensured by putting network adapters in promiscuous mode. Modern hardware and software provide other monitoring methods that lead to the same result
 
+
+
+# Layer 3 routing
+
+Layer 3 routing is a crucial network function that determines the optimal path for data packets to travel across a network. It operates at the network layer (Layer 3) of the OSI model, using IP addresses to make routing decisions.
+Key Concepts:
+ * IP Addresses: Each device on an IP network is assigned a unique IP address, which serves as its identifier.
+ * Routing Tables: Routers maintain routing tables that contain information about network destinations and the best paths to reach them.
+ * Routing Protocols: These protocols, such as RIP, OSPF, and BGP, help routers exchange routing information and dynamically update their routing tables.
+
+
+How Layer 3 Routing Works:
+
+ * Packet Reception: When a router receives a data packet, it examines the destination IP address.
+ * Routing Table Lookup: The router consults its routing table to find the best route to the destination network. This involves matching the destination IP address with the network prefixes in the routing table.
+ * Packet Forwarding: Based on the routing table information, the router forwards the packet to the next hop router or directly to the destination device if it's on the same network.
+
+Benefits of Layer 3 Routing:
+ * Network Segmentation: Divides a large network into smaller, more manageable segments.
+ * Traffic Optimization: Routes traffic efficiently, reducing latency and improving network performance.
+ * Network Scalability: Allows for the addition of new devices and networks without major disruptions.
+ * Security: Provides a layer of security by controlling traffic flow between different network segments.
+In essence, Layer 3 routing is the backbone of modern IP networks, enabling efficient and reliable communication between devices across diverse and complex network topologies.
