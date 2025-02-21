@@ -394,22 +394,30 @@ How do I manage secrets securely in Ansible?
     conda_group: "ubuntu"  # Change this to the desired group
 
   tasks:
+    - name: Check if Miniconda is already installed
+      stat:
+        path: "{{ install_dir }}/bin/conda"
+      register: conda_exists
+
     - name: Install required dependencies
       apt:
         name: curl
         state: present
+      when: not conda_exists.stat.exists
 
     - name: Download Miniconda installer
       get_url:
         url: "{{ miniconda_url }}"
         dest: "/tmp/{{ miniconda_installer }}"
         mode: '0755'
+      when: not conda_exists.stat.exists
 
     - name: Install Miniconda
       shell: |
         /bin/bash /tmp/{{ miniconda_installer }} -b -p {{ install_dir }}
       args:
         creates: "{{ install_dir }}/bin/conda"
+      when: not conda_exists.stat.exists
 
     - name: Set permissions and ownership for Miniconda base directory
       file:
@@ -431,6 +439,8 @@ How do I manage secrets securely in Ansible?
       file:
         path: "/tmp/{{ miniconda_installer }}"
         state: absent
+      when: not conda_exists.stat.exists
+
 ```
 
 ansible-playbook -i inventory.ini install_miniconda.yml
