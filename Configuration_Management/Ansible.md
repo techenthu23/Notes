@@ -380,9 +380,23 @@ Can you explain more about roles and playbooks in Ansible?
 How do I manage secrets securely in Ansible?
 
 
-```yaml
+I've updated the Ansible playbook to use a template for .condarc that allows for custom configurations and includes custom Conda channels.
+
+
 ---
-- name: Install and Configure Miniconda
+
+Enhancements in this version:
+
+✔ Uses Jinja2 template for .condarc
+✔ Allows adding custom channels
+✔ Includes disk space checks before and after installation
+
+
+---
+ Playbook: Manage Miniconda, Conda Config, and Packages
+
+---
+- name: Manage Miniconda, Conda Configuration, and Packages
   hosts: all
   become: yes
   vars:
@@ -390,11 +404,38 @@ How do I manage secrets securely in Ansible?
     miniconda_installer: "Miniconda3-{{ miniconda_version }}-Linux-x86_64.sh"
     miniconda_url: "https://repo.anaconda.com/miniconda/{{ miniconda_installer }}"
     install_dir: "/opt/miniconda"
-    conda_user: "ubuntu"  # Change this to the desired user
-    conda_group: "ubuntu"  # Change this to the desired group
+    tmp_dir: "/tmp/miniconda_tmp"
+    conda_user: "ubuntu"  # Change as needed
+    conda_group: "ubuntu"
+    conda_env_name: "myenv"
+    conda_python_version: "3.9"
+    conda_packages:
+      - numpy
+      - pandas
+      - scikit-learn
+    conda_channels:
+      - defaults
+      - conda-forge
+    conda_settings:
+      auto_activate_base: false
+      show_channel_urls: true
+      channel_priority: strict
+    condarc_path: "/home/{{ conda_user }}/.condarc"
+    required_free_space_mb: 500  # Minimum 500MB required
+    required_free_space_percentage: 10  # At least 10% free space post-install
 
   tasks:
-    - name: Check if Miniconda is already installed
+    - name: Check available disk space
+      command: df --output=avail -m /
+      register: disk_space
+      changed_when: false
+
+    - name: Fail if there is less than 500MB free
+      fail:
+        msg: "Insufficient disk space! Required: 500MB, Available: {{ disk_space.stdout_lines[1] }}MB"
+      when: disk_space.stdout_lines[1] | int < required_free_space_mb
+
+    - name: Check if Miniconda is installed
       stat:
         path: "{{ install_dir }}/bin/conda"
       register: conda_exists
@@ -412,12 +453,24 @@ How do I manage secrets securely in Ansible?
         mode: '0755'
       when: not conda_exists.stat.exists
 
-    - name: Install Miniconda
+    - name: Install Miniconda with TMPDIR set
       shell: |
         /bin/bash /tmp/{{ miniconda_installer }} -b -p {{ install_dir }}
       args:
         creates: "{{ install_dir }}/bin/conda"
+      environment:
+        TMPDIR: "{{ tmp_dir }}"
       when: not conda_exists.stat.exists
+
+    - name: Check post-installation disk space
+      command: df --output=pcent /
+      register: post_install_space
+      changed_when: false
+
+    - name: Fail if less than 10% free space remains
+      fail:
+        msg: "Post-installation disk space too low! Less than {{ required_free_space_percentage }}% remaining."
+      when: post_install_space.stdout_lines[1] | regex_replace('%', '') | int > (100 - required_free_space_percentage)
 
     - name: Set permissions and ownership for Miniconda base directory
       file:
@@ -427,7 +480,7 @@ How do I manage secrets securely in Ansible?
         mode: "0755"
         recurse: yes
 
-    - name: Add Miniconda to the system PATH
+    - name: Add Miniconda to system PATH
       lineinfile:
         path: "/etc/profile.d/conda.sh"
         line: 'export PATH="{{ install_dir }}/bin:$PATH"'
@@ -441,6 +494,272 @@ How do I manage secrets securely in Ansible?
         state: absent
       when: not conda_exists.stat.exists
 
-```
+    - name: Initialize Conda for shell sessions
+      shell: |
+        {{ install_dir }}/bin/conda init
+      args:
+        executable: /bin/bash
 
-ansible-playbook -i inventory.ini install_miniconda.yml
+    - name: Check if Conda environment exists
+      command: "{{ install_dir }}/bin/conda env list --json"
+      register: conda_envs
+      changed_when: false
+
+    - name: Create Conda environment if not exists
+      shell: |
+        {{ install_dir }}/bin/conda create --name {{ conda_env_name }} python={{ conda_python_version }} -y
+      when: "'{{ conda_env_name }}' not in conda_envs.stdout"
+
+    - name: Install and upgrade Conda packages in the environment
+      shell: |
+        {{ install_dir }}/bin/conda install --name {{ conda_env_name }} {{ conda_packages | join(' ') }} -y
+        {{ install_dir }}/bin/conda update --name {{ conda_env_name }} --all -y
+
+    - name: Configure Conda settings in .condarc
+      template:
+        src: condarc.j2
+        dest: "{{ condarc_path }}"
+        owner: "{{ conda_user }}"
+        group: "{{ conda_group }}"
+        mode: "0644"
+
+    - name: Apply Conda configuration settings
+      shell: |
+        {% for setting, value in conda_settings.items() %}
+        {{ install_dir }}/bin/conda config --set {{ setting }} {{ value }}
+        {% endfor %}
+      args:
+        executable: /bin/bash
+
+
+---
+
+2️⃣ Jinja2 Template for .condarc (condarc.j2)
+
+Save this template in your Ansible playbook directory:
+
+channels:
+{% for channel in conda_channels %}
+  - {{ channel }}
+{% endfor %}
+auto_activate_base: {{ conda_settings.auto_activate_base }}
+show_channel_urls: {{ conda_settings.show_channel_urls }}
+channel_priority: {{ conda_settings.channel_priority }}
+
+
+---
+
+3️⃣ What This Playbook Does
+
+✅ Checks for free disk space (min 500MB required)
+✅ Ensures at least 10% free space remains after installation
+✅ Installs Miniconda only if not already installed
+✅ Creates a Conda environment (myenv)
+✅ Installs & upgrades Conda packages (numpy, pandas, scikit-learn)
+✅ Uses a template (condarc.j2) for managing .condarc settings
+✅ Adds custom Conda channels (defaults, conda-forge)
+
+
+---
+
+4️⃣ Run the Playbook
+
+ansible-playbook -i inventory.ini manage_miniconda.yml
+
+Creating a Custom Ansible Module
+
+Ansible allows you to write custom modules in Python to extend its capabilities. Here's how you can create a custom Ansible module step by step.
+
+
+---
+
+1️⃣ Directory Structure
+
+custom_modules/
+│── library/
+│   ├── my_custom_module.py   # Custom module script
+│── playbook.yml               # Ansible playbook using the module
+
+library/ → This is where Ansible looks for custom modules.
+
+my_custom_module.py → Python script for your module.
+
+playbook.yml → Playbook that calls the module.
+
+
+
+---
+
+2️⃣ Writing the Custom Module (Python)
+
+Create library/my_custom_module.py with the following content:
+
+#!/usr/bin/python
+
+from ansible.module_utils.basic import AnsibleModule
+
+def main():
+    module_args = dict(
+        name=dict(type='str', required=True),
+        age=dict(type='int', required=False, default=25)
+    )
+
+    module = AnsibleModule(argument_spec=module_args)
+
+    name = module.params['name']
+    age = module.params['age']
+
+    message = f"Hello {name}, you are {age} years old."
+
+    module.exit_json(changed=False, message=message)
+
+if __name__ == '__main__':
+    main()
+
+
+---
+
+3️⃣ Calling the Custom Module in a Playbook
+
+Create playbook.yml:
+
+---
+- name: Test Custom Module
+  hosts: localhost
+  tasks:
+    - name: Call my_custom_module
+      my_custom_module:
+        name: "Alice"
+        age: 30
+      register: result
+
+    - debug:
+        msg: "{{ result.message }}"
+
+
+---
+
+4️⃣ Running the Playbook
+
+ansible-playbook -i localhost, playbook.yml
+
+
+---
+
+5️⃣ Expected Output
+
+TASK [debug]
+ok: [localhost] => {
+    "msg": "Hello Alice, you are 30 years old."
+}
+
+
+---
+
+6️⃣ Explanation
+
+✅ Uses AnsibleModule for input validation
+✅ Accepts parameters (name, age)
+✅ Returns structured JSON output using module.exit_json()
+
+
+---
+
+7️⃣ Adding Custom Module to Ansible
+
+To make the module globally available:
+
+export ANSIBLE_LIBRARY=~/custom_modules/library
+
+Would you like an example of a real-world module, such as managing Miniconda? 🚀
+
+In Ansible, you can handle default values and conditional execution based on whether a variable is provided. Here’s how:
+
+
+---
+
+1️⃣ Setting Default Values Using default()
+
+If a variable is not provided, assign a default value:
+
+- name: Use default values if not provided
+  debug:
+    msg: "User {{ name | default('Guest') }} is {{ age | default(30) }} years old."
+
+✅ If name is not set, it defaults to "Guest".
+✅ If age is not set, it defaults to 30.
+
+
+---
+
+2️⃣ Skipping a Task If a Variable Is Missing (when)
+
+If a variable is not provided, skip execution using when:
+
+- name: Run only if 'username' is provided
+  debug:
+    msg: "Hello {{ username }}"
+  when: username is defined
+
+✅ If username is not provided, the task is skipped.
+
+
+---
+
+3️⃣ Skipping a Task If the Variable Is Empty (when: var | length > 0)
+
+Sometimes, a variable may be defined but empty ("", null, or []). To skip the task in such cases:
+
+- name: Run only if 'package_name' is not empty
+  debug:
+    msg: "Installing package {{ package_name }}"
+  when: package_name | length > 0
+
+✅ If package_name is an empty string (""), the task won’t run.
+
+
+---
+
+4️⃣ Using fail If a Variable Is Mandatory
+
+If execution must stop when a required variable is missing, use fail:
+
+- name: Stop playbook if 'env' variable is missing
+  fail:
+    msg: "ERROR: 'env' variable is required but not provided."
+  when: env is not defined or env | length == 0
+
+✅ If env is missing or empty, the playbook stops immediately.
+
+
+---
+
+5️⃣ Combining Defaults & Conditional Execution
+
+You can mix default() and when to make execution dynamic:
+
+- name: Example of both default and conditional execution
+  debug:
+    msg: "Deploying in environment {{ env | default('development') }}"
+  when: env is defined and env | length > 0
+
+✅ If env is not provided, it defaults to "development".
+✅ If env is empty, the task is skipped.
+
+
+---
+
+🔹 Real-World Example: Miniconda Installation
+
+- name: Install Miniconda only if enough disk space is available
+  shell: wget -O /tmp/miniconda.sh "{{ miniconda_url | default('https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh') }}"
+  when: disk_space_mb | default(0) | int > 500
+
+✅ If disk_space_mb is not provided, defaults to 0 (task will be skipped).
+✅ If disk_space_mb > 500, Miniconda is downloaded.
+
+
+---
+
+Would you like me to refine this for your specific use case (e.g., Miniconda playbook)? 🚀
+
