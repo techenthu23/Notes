@@ -108,3 +108,59 @@ Use the non-strict regex for lenient validation, allowing missing padding.
 
 Would you like a Ruby function to implement this validation?
 
+No, in non-strict mode, the string length does not need to be divisible by 4.
+
+Key Differences:
+
+Why?
+
+1. Strict Mode:
+
+Base64 encoding always generates output in multiples of 4.
+
+If the input data isn't a multiple of 3 bytes, padding (=) is used to ensure a multiple of 4.
+
+
+
+2. Non-Strict Mode:
+
+Some Base64 implementations omit padding (=), making the length not necessarily a multiple of 4.
+
+Some Base64 variations (e.g., URL-safe encoding) don't require padding at all.
+
+
+
+
+Examples
+
+✅ Valid Non-Strict Base64 Strings (Not Divisible by 4)
+
+"U29tZQ" → ("Some", missing padding)
+
+"SGVsbG8" → ("Hello", missing padding)
+
+"QmFzZTY0VGVzdA" → ("Base64Test", missing padding)
+
+
+❌ Invalid Non-Strict Base64 (Wrong Characters)
+
+"Invalid*Base64" → (* is not a Base64 character)
+
+"HelloWorld!" → (Not Base64 encoded)
+
+
+
+---
+
+Ruby Function to Validate Non-Strict Base64
+
+def non_strict_base64?(str)
+  !!(str =~ /\A[A-Za-z0-9+\/]+={0,2}\z/)
+end
+
+puts non_strict_base64?("U29tZQ")  # true (valid non-strict Base64)
+puts non_strict_base64?("SGVsbG8") # true (valid non-strict Base64)
+puts non_strict_base64?("Invalid*Base64") # false (invalid character `*`)
+
+Would you like a function to decode and verify non-strict Base64 in Ruby?
+
