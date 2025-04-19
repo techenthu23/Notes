@@ -153,11 +153,94 @@ Or use combine() in Jinja:
 merged_dict: "{{ dict1 | combine(dict2) }}"
 ```
 
+
+1. Are there host_vars under the project root folder?
+
+Yes, you can have a host_vars/ directory under your Ansible project root, and Ansible will automatically pick it up, as long as:
+
+The names of the files match the hostnames (as seen in the inventory).
+
+You are using static inventory (INI, YAML, or script-based).
+
+
+Example:
+```
+my-ansible-project/
+├── inventory
+├── host_vars/
+│   ├── server1.yml
+│   └── 10.0.0.5.yml
+└── playbook.yml
+```
+
 ---
 
-Summary
+2. How does group_vars know which file to be picked?
+
+Ansible uses the group names from your inventory and looks for matching files or directories under group_vars/.
+
+You can either use:
+
+`group_vars/groupname.yml`
+
+or group_vars/groupname/ (as a directory with a main.yml)
+
+
+
+Example:
+```
+# inventory
+[web]
+web01
+web02
+
+[db]
+db01
+```
+Structure:
+```
+group_vars/
+├── web.yml
+└── db.yml
+```
+So, web.yml will apply to web01 and web02 automatically.
 
 
 ---
+
+3. Does host_vars look out for the FQDN or short server name?
+
+It depends on how the host is defined in your inventory.
+
+Ansible looks at the host name string used in the inventory. So:
+
+If your inventory lists: myhost.example.com, then the corresponding file must be:
+
+host_vars/myhost.example.com.yml
+
+If you use a short name like myhost, then:
+
+```host_vars/myhost.yml```
+
+
+It does not automatically try to resolve or convert FQDN vs short names.
+
+
+---
+
+Pro Tip:
+
+To avoid confusion:
+
+Match the filenames under host_vars/ exactly to how the hosts are listed in your inventory.
+
+You can use ansible-inventory --list to see how Ansible sees your hosts.
+
+
+
+---
+
+Let me know if you'd like a sample structure or a mini project example!
+
 
 
