@@ -3,6 +3,8 @@
 
 ---
 
+```text
+
 Typical Ansible Project Structure
 
 my-ansible-project/
@@ -39,7 +41,7 @@ my-ansible-project/
 │   └── myfile.txt
 └── group_vars/              # Group-specific variables (alternative to being inside inventory/)
     └── all.yml
-
+```
 
 ---
 
@@ -109,8 +111,6 @@ Below is a simplified precedence list (from lowest to highest). The highest one 
 9. Extra vars (--extra-vars) ← Highest
 
 
-
-
 ---
 
 Overwrite vs Merge
@@ -121,18 +121,21 @@ If a variable is defined in multiple places, Ansible does not combine values —
 
 Example:
 
+```yaml
 # group_vars/all.yml
 myvar: "value-from-group"
 
 # playbook.yml vars section
 vars:
   myvar: "value-from-playbook"
+```
 
 → Final value of myvar = "value-from-playbook" (because playbook vars > group_vars)
 
 
 Merging is only supported in specific cases, like with dictionaries (YAML 1.2 merge keys) and only when explicitly coded to do so, using Ansible 2.8+ features like:
 
+```yaml
 defaults: &defaults
   var1: one
   var2: two
@@ -142,12 +145,13 @@ override:
   var2: override
 
 → var2 becomes "override", while var1 remains "one".
+```
 
 Or use combine() in Jinja:
 
+```yaml
 merged_dict: "{{ dict1 | combine(dict2) }}"
-
-
+```
 
 ---
 
